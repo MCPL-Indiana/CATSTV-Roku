@@ -2,11 +2,11 @@
 <!--
     HomeScreen.xml - Channel selection screen (mirrors tvOS ContentView)
 
-    Layout (1920x1080 FHD):
-      [0-100]   Header bar with CATS TV branding
-      [230-340] "WATCH CATS / LIVE" heading + subtitle
-      [400-700] 4 channel cards in a horizontal row
-      [1000-1080] Footer with address/contact
+    Layout (1920x1080 FHD) — Roku safe zone: x=80–1840, y=60–1020
+      [0-100]    Header bar (bg full-width; text within x=80–1840, y=60–100)
+      [230-360]  "WATCH CATS / LIVE" heading + subtitle
+      [400-700]  4 channel cards in a horizontal row (x=180–1740, within safe zone)
+      [940-1080] Footer bar (bg extends to bottom; text within y=950–1010)
 -->
 <component name="HomeScreen" extends="Group" handlesBack="false">
     <interface>
@@ -21,12 +21,13 @@
 
         <!-- ── Header bar ── -->
         <Rectangle id="headerBg" width="1920" height="100" color="#1E2224FF" translation="[0, 0]" />
+        <!-- x=80 left safe zone; right label ends at 1580+240=1820 < 1840 right safe zone -->
         <Label
             id="logoLabel"
             width="300" height="100"
             text="CATS TV"
             horizAlign="left" vertAlign="center"
-            translation="[60, 0]"
+            translation="[80, 0]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
         <Label
@@ -34,7 +35,7 @@
             width="240" height="100"
             text="LIVE STREAMS"
             horizAlign="right" vertAlign="center"
-            translation="[1620, 0]"
+            translation="[1580, 0]"
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont" />
 
@@ -74,14 +75,18 @@
         <ChannelCard id="card2" translation="[980, 400]" />
         <ChannelCard id="card3" translation="[1380, 400]" />
 
-        <!-- ── Footer bar ── -->
-        <Rectangle id="footerBg" width="1920" height="80" color="#1A1D1FFF" translation="[0, 1000]" />
+        <!-- ── Footer bar ──
+             Background extends to the screen bottom (fine for a decoration rect).
+             Text labels kept within the y=1020 safe zone bottom:
+               footerOrg    centers at y=970  ✓
+               footerAddress centers at y=1005 ✓  -->
+        <Rectangle id="footerBg" width="1920" height="140" color="#1A1D1FFF" translation="[0, 940]" />
         <Label
             id="footerOrg"
             width="1920" height="40"
             text="Community Access Television Services"
             horizAlign="center" vertAlign="center"
-            translation="[0, 1000]"
+            translation="[0, 950]"
             color="#999999FF"
             font="font:SmallSystemFont" />
         <Label
@@ -89,7 +94,7 @@
             width="1920" height="40"
             text="303 E. Kirkwood Ave.  •  Bloomington, IN 47408  •  (812) 349-3111"
             horizAlign="center" vertAlign="center"
-            translation="[0, 1040]"
+            translation="[0, 985]"
             color="#6E7377FF"
             font="font:SmallSystemFont" />
 

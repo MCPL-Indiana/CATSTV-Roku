@@ -2,10 +2,9 @@
 <!--
     PlayerScreen.xml - Full-screen HLS video player (mirrors tvOS LiveStreamPlayerView)
 
-    Layout:
-      Video node fills the full 1920x1080 screen.
-      A semi-transparent overlay at top-left shows channel name + LIVE indicator.
-      A loading label is displayed while the stream buffers.
+    Layout — Roku safe zone: x=80–1840, y=60–1020
+      Video node fills the full 1920x1080 scene (Roku scales to TV output resolution).
+      Overlay elements are placed within the safe zone so overscan doesn't clip them.
       BACK key stops playback and returns to HomeScreen.
 -->
 <component name="PlayerScreen" extends="Group" handlesBack="true">
@@ -21,31 +20,32 @@
         <!-- Black background, visible while loading -->
         <Rectangle id="bg" width="1920" height="1080" color="#000000FF" />
 
-        <!-- Full-screen video (HLS via Roku Video node) -->
-        <Video id="video" width="1920" height="1080" translation="[0, 0]" />
+        <!-- Full-screen video (HLS via Roku Video node).
+             1920x1080 matches ui_resolution=FHD; Roku automatically downscales
+             to the TV's native resolution (720p, 1080p, 4K). -->
+        <Video id="video" width="1920" height="1080" translation="[0, 0]" enableUI="false" />
 
-        <!-- ── Channel info overlay (top-left, shown once playing) ── -->
-        <!-- Semi-transparent pill background -->
+        <!-- ── Channel info overlay (top-left, shown once playing) ──
+             Kept within safe zone: x≥80, y≥60                      -->
         <Rectangle id="overlayBg"
             width="480" height="60"
             color="#00000099"
-            translation="[40, 40]"
+            translation="[80, 65]"
             visible="false" />
 
-        <!-- Channel name -->
         <Label id="channelNameLabel"
             width="360" height="60"
             horizAlign="left" vertAlign="center"
-            translation="[60, 40]"
+            translation="[100, 65]"
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont"
             visible="false" />
 
-        <!-- Coral live dot -->
+        <!-- Coral live dot: vertically centered in the 60px overlay (65+24=89) -->
         <Rectangle id="liveDot"
             width="12" height="12"
             color="#FF5F62FF"
-            translation="[432, 64]"
+            translation="[472, 89]"
             visible="false" />
 
         <!-- LIVE label -->
@@ -53,7 +53,7 @@
             width="60" height="30"
             text="LIVE"
             horizAlign="left" vertAlign="center"
-            translation="[452, 55]"
+            translation="[492, 80]"
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont"
             visible="false" />
@@ -67,11 +67,11 @@
             font="font:LargeSystemFont"
             visible="true" />
 
-        <!-- Back hint at bottom-right -->
+        <!-- Back hint — bottom-right, within safe zone (ends at x=1840, centers at y=1000) -->
         <Label id="backHint"
             width="440" height="40"
             horizAlign="right" vertAlign="center"
-            translation="[1460, 1040]"
+            translation="[1400, 980]"
             text="Press BACK to return"
             color="#6E7377FF"
             font="font:SmallSystemFont" />
