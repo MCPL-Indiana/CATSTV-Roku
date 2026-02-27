@@ -1,8 +1,38 @@
 ' MainScene.brs - Handles navigation between HomeScreen and PlayerScreen
 
 sub init()
-    m.homeScreen = m.top.findNode("homeScreen")
+    m.homeScreen  = m.top.findNode("homeScreen")
     m.playerScreen = m.top.findNode("playerScreen")
+
+    ' ── Dynamic resolution scaling ────────────────────────────────────────────
+    ' The UI is designed at HD (1280x720). At runtime we detect the TV's actual
+    ' output resolution and apply a uniform scale factor to both screens so that
+    ' every element renders natively crisp — no blurry Roku upscaling.
+    '
+    '   720p  TV  → scale 1.0  (no change, renders at design size)
+    '   1080p TV  → scale 1.5  (1920/1280 = 1.5)
+    '   4K    TV  → scale 3.0  (3840/1280 = 3.0, or 2.0 if Roku outputs 1080p to 4K)
+    ' ─────────────────────────────────────────────────────────────────────────
+    deviceInfo  = CreateObject("roDeviceInfo")
+    displaySize = deviceInfo.GetDisplaySize()
+
+    if displaySize.w > 0 and displaySize.h > 0
+        scaleX = displaySize.w / 1280.0
+        scaleY = displaySize.h / 720.0
+
+        ' Use the smaller axis to preserve aspect ratio on any display
+        if scaleX <= scaleY
+            uiScale = scaleX
+        else
+            uiScale = scaleY
+        end if
+
+        if uiScale <> 1.0
+            m.homeScreen.scale   = [uiScale, uiScale]
+            m.playerScreen.scale = [uiScale, uiScale]
+        end if
+    end if
+    ' ─────────────────────────────────────────────────────────────────────────
 
     m.homeScreen.observeField("channelSelected", "onChannelSelected")
     m.playerScreen.observeField("playerClosed", "onPlayerClosed")
