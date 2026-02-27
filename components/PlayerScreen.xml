@@ -2,76 +2,74 @@
 <!--
     PlayerScreen.xml - Full-screen HLS video player (mirrors tvOS LiveStreamPlayerView)
 
-    Layout — Roku safe zone: x=80–1840, y=60–1020
-      Video node fills the full 1920x1080 scene (Roku scales to TV output resolution).
-      Overlay elements are placed within the safe zone so overscan doesn't clip them.
-      BACK key stops playback and returns to HomeScreen.
+    Coordinate space: HD 1280x720 (ui_resolution=HD in manifest)
+    Safe zone: x=54–1226, y=40–680
+
+    Video node fills the full 1280x720 scene.
+    Overlay elements placed within safe zone so overscan doesn't clip them.
+    BACK key stops playback and returns to HomeScreen.
 -->
 <component name="PlayerScreen" extends="Group" handlesBack="true">
     <interface>
-        <!-- Set by MainScene when user picks a channel -->
         <field id="channelData"  type="assocarray" onChange="onChannelDataChange" />
-        <!-- Observed by MainScene to know when to return to HomeScreen -->
         <field id="playerClosed" type="boolean"    alwaysNotify="true" />
     </interface>
 
     <children>
 
         <!-- Black background, visible while loading -->
-        <Rectangle id="bg" width="1920" height="1080" color="#000000FF" />
+        <Rectangle id="bg" width="1280" height="720" color="#000000FF" />
 
         <!-- Full-screen video (HLS via Roku Video node).
-             1920x1080 matches ui_resolution=FHD; Roku automatically downscales
-             to the TV's native resolution (720p, 1080p, 4K). -->
-        <Video id="video" width="1920" height="1080" translation="[0, 0]" enableUI="false" />
+             1280x720 matches ui_resolution=HD. Roku upscales to 1080p/4K if the TV supports it. -->
+        <Video id="video" width="1280" height="720" translation="[0, 0]" enableUI="false" />
 
-        <!-- ── Channel info overlay (top-left, shown once playing) ──
-             Kept within safe zone: x≥80, y≥60                      -->
+        <!-- ── Channel info overlay (top-left, within safe zone x≥54, y≥40) ── -->
         <Rectangle id="overlayBg"
-            width="480" height="60"
+            width="320" height="40"
             color="#00000099"
-            translation="[80, 65]"
+            translation="[54, 43]"
             visible="false" />
 
         <Label id="channelNameLabel"
-            width="360" height="60"
+            width="240" height="40"
             horizAlign="left" vertAlign="center"
-            translation="[100, 65]"
+            translation="[67, 43]"
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont"
             visible="false" />
 
-        <!-- Coral live dot: vertically centered in the 60px overlay (65+24=89) -->
+        <!-- Coral live dot: vertically centered in the 40px overlay (43+16=59) -->
         <Rectangle id="liveDot"
-            width="12" height="12"
+            width="8" height="8"
             color="#FF5F62FF"
-            translation="[472, 89]"
+            translation="[315, 59]"
             visible="false" />
 
         <!-- LIVE label -->
         <Label id="liveLabel"
-            width="60" height="30"
+            width="40" height="20"
             text="LIVE"
             horizAlign="left" vertAlign="center"
-            translation="[492, 80]"
+            translation="[328, 53]"
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont"
             visible="false" />
 
-        <!-- ── Loading / error message (centered, shown while buffering) ── -->
+        <!-- ── Loading / error message (centered) ── -->
         <Label id="loadingLabel"
-            width="1920" height="1080"
+            width="1280" height="720"
             horizAlign="center" vertAlign="center"
             text="Loading stream..."
             color="#FFFFFFFF"
             font="font:LargeSystemFont"
             visible="true" />
 
-        <!-- Back hint — bottom-right, within safe zone (ends at x=1840, centers at y=1000) -->
+        <!-- Back hint — bottom-right, within safe zone (ends at x=1226, centers at y=666 ✓) -->
         <Label id="backHint"
-            width="440" height="40"
+            width="293" height="27"
             horizAlign="right" vertAlign="center"
-            translation="[1400, 980]"
+            translation="[933, 653]"
             text="Press BACK to return"
             color="#6E7377FF"
             font="font:SmallSystemFont" />

@@ -2,11 +2,13 @@
 <!--
     ChannelCard.xml - Focusable channel card (mirrors tvOS ChannelCardView)
 
-    Card anatomy (360 x 300):
-      [0-190]   Thumbnail area with dark gradient bg + icon letter
-      [148-180] LIVE badge (coral pill)
-      [195-245] Channel name (bold, turns coral when focused)
-      [248-290] Channel subtitle (muted gray)
+    Coordinate space: HD 1280x720 (all values scaled 2/3 from original FHD design)
+
+    Card anatomy (240 x 200):
+      [0-127]  Thumbnail area with dark bg + icon letter
+      [99-120] LIVE badge (coral pill)
+      [131-164] Channel name (bold, turns coral when focused)
+      [168-195] Channel subtitle (muted gray)
 
     Focus state: darker bg + coral name text + coral border outline
 -->
@@ -22,58 +24,58 @@
 
         <!-- Outer card background -->
         <Rectangle id="cardBg"
-            width="360" height="300"
+            width="240" height="200"
             color="#636D72FF"
             blendingEnabled="true" />
 
         <!-- Coral border (visible when focused) -->
-        <Rectangle id="borderTop"    width="360" height="3"   color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderBottom" width="360" height="3"   color="#00000000" translation="[0, 297]" />
-        <Rectangle id="borderLeft"   width="3"   height="300" color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderRight"  width="3"   height="300" color="#00000000" translation="[357, 0]" />
+        <Rectangle id="borderTop"    width="240" height="2"   color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderBottom" width="240" height="2"   color="#00000000" translation="[0, 198]" />
+        <Rectangle id="borderLeft"   width="2"   height="200" color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderRight"  width="2"   height="200" color="#00000000" translation="[238, 0]" />
 
         <!-- Thumbnail area background -->
         <Rectangle id="thumbBg"
-            width="360" height="190"
+            width="240" height="127"
             color="#4A5459FF"
             translation="[0, 0]" />
 
         <!-- Channel icon letter (large, centered in thumbnail) -->
         <Label id="iconLabel"
-            width="360" height="130"
+            width="240" height="87"
             horizAlign="center" vertAlign="center"
-            translation="[0, 10]"
+            translation="[0, 7]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
 
         <!-- LIVE badge background (coral) -->
         <Rectangle id="liveBadgeBg"
-            width="90" height="32"
+            width="60" height="21"
             color="#FF5F62FF"
-            translation="[135, 149]" />
+            translation="[90, 99]" />
 
         <!-- LIVE badge text -->
         <Label id="liveLabel"
-            width="90" height="32"
+            width="60" height="21"
             text="• LIVE"
             horizAlign="center" vertAlign="center"
-            translation="[135, 149]"
+            translation="[90, 99]"
             color="#FFFFFFFF"
             font="font:SmallBoldSystemFont" />
 
         <!-- Channel name -->
         <Label id="nameLabel"
-            width="340" height="50"
+            width="227" height="33"
             horizAlign="center" vertAlign="center"
-            translation="[10, 196]"
+            translation="[7, 131]"
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont" />
 
         <!-- Channel subtitle -->
         <Label id="subtitleLabel"
-            width="340" height="40"
+            width="227" height="27"
             horizAlign="center" vertAlign="center"
-            translation="[10, 252]"
+            translation="[7, 168]"
             color="#999999FF"
             font="font:SmallSystemFont" />
 

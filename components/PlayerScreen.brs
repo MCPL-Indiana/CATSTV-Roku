@@ -1,8 +1,8 @@
 ' PlayerScreen.brs - HLS video playback logic
 '
-' Mirrors tvOS LiveStreamPlayerView: loads the HLS .m3u8 URL into an AVPlayer equivalent
-' (Roku's Video node), shows a loading state while buffering, then reveals the
-' channel name / LIVE overlay once the stream is playing.
+' Mirrors tvOS LiveStreamPlayerView: loads the HLS .m3u8 URL into a Roku Video node,
+' shows a loading state while buffering, then reveals the channel name / LIVE overlay.
+' Coordinate space: HD 1280x720 (ui_resolution=HD).
 ' BACK key stops the video and signals MainScene to return to HomeScreen.
 
 sub init()

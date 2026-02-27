@@ -2,99 +2,100 @@
 <!--
     HomeScreen.xml - Channel selection screen (mirrors tvOS ContentView)
 
-    Layout (1920x1080 FHD) — Roku safe zone: x=80–1840, y=60–1020
-      [0-100]    Header bar (bg full-width; text within x=80–1840, y=60–100)
-      [230-360]  "WATCH CATS / LIVE" heading + subtitle
-      [400-700]  4 channel cards in a horizontal row (x=180–1740, within safe zone)
-      [940-1080] Footer bar (bg extends to bottom; text within y=950–1010)
+    Coordinate space: HD 1280x720 (ui_resolution=HD in manifest)
+    Safe zone: x=54–1226, y=40–680 (~4% from each edge)
+
+      [0-67]   Header bar (bg full-width; text within x=54–1226)
+      [153-230] "WATCH CATS / LIVE" heading + subtitle
+      [267-467] 4 channel cards: x=120,387,653,920 each 240px wide (ends at 1160 < 1226 ✓)
+      [627-720] Footer bar (bg to bottom edge; text within y=633–684 ✓)
 -->
 <component name="HomeScreen" extends="Group" handlesBack="false">
     <interface>
-        <!-- Notified when the user selects a channel; carries the channel assocarray -->
         <field id="channelSelected" type="assocarray" alwaysNotify="true" />
     </interface>
 
     <children>
 
         <!-- ── Background ── -->
-        <Rectangle id="bg" width="1920" height="1080" color="#282C2FFF" />
+        <Rectangle id="bg" width="1280" height="720" color="#282C2FFF" />
 
         <!-- ── Header bar ── -->
-        <Rectangle id="headerBg" width="1920" height="100" color="#1E2224FF" translation="[0, 0]" />
-        <!-- x=80 left safe zone; right label ends at 1580+240=1820 < 1840 right safe zone -->
+        <Rectangle id="headerBg" width="1280" height="67" color="#1E2224FF" translation="[0, 0]" />
+        <!-- x=54 left safe zone; right label ends at 1053+160=1213 < 1226 right safe zone -->
         <Label
             id="logoLabel"
-            width="300" height="100"
+            width="200" height="67"
             text="CATS TV"
             horizAlign="left" vertAlign="center"
-            translation="[80, 0]"
+            translation="[54, 0]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
         <Label
             id="liveStreamsLabel"
-            width="240" height="100"
+            width="160" height="67"
             text="LIVE STREAMS"
             horizAlign="right" vertAlign="center"
-            translation="[1580, 0]"
+            translation="[1053, 0]"
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont" />
 
         <!-- ── "WATCH CATS" heading (white) ── -->
         <Label
             id="watchCatsLabel"
-            width="620" height="70"
+            width="413" height="47"
             text="WATCH CATS"
             horizAlign="right" vertAlign="center"
-            translation="[330, 230]"
+            translation="[220, 153]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
 
         <!-- ── "LIVE" heading (coral accent) ── -->
         <Label
             id="liveHeadingLabel"
-            width="200" height="70"
+            width="133" height="47"
             text="LIVE"
             horizAlign="left" vertAlign="center"
-            translation="[968, 230]"
+            translation="[645, 153]"
             color="#FF5F62FF"
             font="font:LargeSystemFont" />
 
         <!-- ── Subtitle ── -->
         <Label
             id="subtitleLabel"
-            width="1920" height="40"
+            width="1280" height="27"
             text="Select a channel to start watching"
             horizAlign="center" vertAlign="center"
-            translation="[0, 310]"
+            translation="[0, 207]"
             color="#999999FF"
             font="font:MediumSystemFont" />
 
-        <!-- ── Channel cards (centered: start=180, step=400) ── -->
-        <ChannelCard id="card0" translation="[180, 400]" />
-        <ChannelCard id="card1" translation="[580, 400]" />
-        <ChannelCard id="card2" translation="[980, 400]" />
-        <ChannelCard id="card3" translation="[1380, 400]" />
+        <!-- ── Channel cards ──
+             4 × 240px wide + 3 × 27px gaps = 1041px total
+             Start x=120, step=267; last card ends at 920+240=1160 < 1226 safe zone ✓ -->
+        <ChannelCard id="card0" translation="[120, 267]" />
+        <ChannelCard id="card1" translation="[387, 267]" />
+        <ChannelCard id="card2" translation="[653, 267]" />
+        <ChannelCard id="card3" translation="[920, 267]" />
 
         <!-- ── Footer bar ──
-             Background extends to the screen bottom (fine for a decoration rect).
-             Text labels kept within the y=1020 safe zone bottom:
-               footerOrg    centers at y=970  ✓
-               footerAddress centers at y=1005 ✓  -->
-        <Rectangle id="footerBg" width="1920" height="140" color="#1A1D1FFF" translation="[0, 940]" />
+             Background extends to screen bottom (fine for a decoration rect).
+             Text within safe zone: org centers at y=647 ✓, address centers at y=670 ✓ -->
+        <Rectangle id="footerBg" width="1280" height="93" color="#1A1D1FFF" translation="[0, 627]" />
         <Label
             id="footerOrg"
-            width="1920" height="40"
+            width="1280" height="27"
             text="Community Access Television Services"
             horizAlign="center" vertAlign="center"
-            translation="[0, 950]"
+            translation="[0, 633]"
             color="#999999FF"
             font="font:SmallSystemFont" />
         <Label
             id="footerAddress"
-            width="1920" height="40"
+            width="1280" height="27"
             text="303 E. Kirkwood Ave.  •  Bloomington, IN 47408  •  (812) 349-3111"
             horizAlign="center" vertAlign="center"
-            translation="[0, 985]"
+            translation="[0, 657]"
             color="#6E7377FF"
             font="font:SmallSystemFont" />
 
