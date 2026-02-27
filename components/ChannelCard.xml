@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    ChannelCard.xml - Focusable channel card (mirrors tvOS ChannelCardView)
+
+    Card anatomy (360 x 300):
+      [0-190]   Thumbnail area with dark gradient bg + icon letter
+      [148-180] LIVE badge (coral pill)
+      [195-245] Channel name (bold, turns coral when focused)
+      [248-290] Channel subtitle (muted gray)
+
+    Focus state: darker bg + coral name text + coral border outline
+-->
+<component name="ChannelCard" extends="Group" focusable="true">
+    <interface>
+        <field id="channelName"     type="string"  onChange="onDataChange" />
+        <field id="channelSubtitle" type="string"  onChange="onDataChange" />
+        <field id="iconText"        type="string"  onChange="onDataChange" />
+        <field id="isFocused"       type="boolean" value="false" onChange="onFocusChange" />
+    </interface>
+
+    <children>
+
+        <!-- Outer card background -->
+        <Rectangle id="cardBg"
+            width="360" height="300"
+            color="#636D72FF"
+            blendingEnabled="true" />
+
+        <!-- Coral border (visible when focused) -->
+        <Rectangle id="borderTop"    width="360" height="3"   color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderBottom" width="360" height="3"   color="#00000000" translation="[0, 297]" />
+        <Rectangle id="borderLeft"   width="3"   height="300" color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderRight"  width="3"   height="300" color="#00000000" translation="[357, 0]" />
+
+        <!-- Thumbnail area background -->
+        <Rectangle id="thumbBg"
+            width="360" height="190"
+            color="#4A5459FF"
+            translation="[0, 0]" />
+
+        <!-- Channel icon letter (large, centered in thumbnail) -->
+        <Label id="iconLabel"
+            width="360" height="130"
+            horizAlign="center" vertAlign="center"
+            translation="[0, 10]"
+            color="#FFFFFFFF"
+            font="font:LargeSystemFont" />
+
+        <!-- LIVE badge background (coral) -->
+        <Rectangle id="liveBadgeBg"
+            width="90" height="32"
+            color="#FF5F62FF"
+            translation="[135, 149]" />
+
+        <!-- LIVE badge text -->
+        <Label id="liveLabel"
+            width="90" height="32"
+            text="• LIVE"
+            horizAlign="center" vertAlign="center"
+            translation="[135, 149]"
+            color="#FFFFFFFF"
+            font="font:SmallBoldSystemFont" />
+
+        <!-- Channel name -->
+        <Label id="nameLabel"
+            width="340" height="50"
+            horizAlign="center" vertAlign="center"
+            translation="[10, 196]"
+            color="#FFFFFFFF"
+            font="font:MediumBoldSystemFont" />
+
+        <!-- Channel subtitle -->
+        <Label id="subtitleLabel"
+            width="340" height="40"
+            horizAlign="center" vertAlign="center"
+            translation="[10, 252]"
+            color="#999999FF"
+            font="font:SmallSystemFont" />
+
+    </children>
+    <script type="text/brightscript" uri="ChannelCard.brs" />
+</component>

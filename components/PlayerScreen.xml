@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    PlayerScreen.xml - Full-screen HLS video player (mirrors tvOS LiveStreamPlayerView)
+
+    Layout:
+      Video node fills the full 1920x1080 screen.
+      A semi-transparent overlay at top-left shows channel name + LIVE indicator.
+      A loading label is displayed while the stream buffers.
+      BACK key stops playback and returns to HomeScreen.
+-->
+<component name="PlayerScreen" extends="Group" handlesBack="true">
+    <interface>
+        <!-- Set by MainScene when user picks a channel -->
+        <field id="channelData"  type="assocarray" onChange="onChannelDataChange" />
+        <!-- Observed by MainScene to know when to return to HomeScreen -->
+        <field id="playerClosed" type="boolean"    alwaysNotify="true" />
+    </interface>
+
+    <children>
+
+        <!-- Black background, visible while loading -->
+        <Rectangle id="bg" width="1920" height="1080" color="#000000FF" />
+
+        <!-- Full-screen video (HLS via Roku Video node) -->
+        <Video id="video" width="1920" height="1080" translation="[0, 0]" />
+
+        <!-- ── Channel info overlay (top-left, shown once playing) ── -->
+        <!-- Semi-transparent pill background -->
+        <Rectangle id="overlayBg"
+            width="480" height="60"
+            color="#00000099"
+            translation="[40, 40]"
+            visible="false" />
+
+        <!-- Channel name -->
+        <Label id="channelNameLabel"
+            width="360" height="60"
+            horizAlign="left" vertAlign="center"
+            translation="[60, 40]"
+            color="#FFFFFFFF"
+            font="font:MediumBoldSystemFont"
+            visible="false" />
+
+        <!-- Coral live dot -->
+        <Rectangle id="liveDot"
+            width="12" height="12"
+            color="#FF5F62FF"
+            translation="[432, 64]"
+            visible="false" />
+
+        <!-- LIVE label -->
+        <Label id="liveLabel"
+            width="60" height="30"
+            text="LIVE"
+            horizAlign="left" vertAlign="center"
+            translation="[452, 55]"
+            color="#FF5F62FF"
+            font="font:SmallBoldSystemFont"
+            visible="false" />
+
+        <!-- ── Loading / error message (centered, shown while buffering) ── -->
+        <Label id="loadingLabel"
+            width="1920" height="1080"
+            horizAlign="center" vertAlign="center"
+            text="Loading stream..."
+            color="#FFFFFFFF"
+            font="font:LargeSystemFont"
+            visible="true" />
+
+        <!-- Back hint at bottom-right -->
+        <Label id="backHint"
+            width="440" height="40"
+            horizAlign="right" vertAlign="center"
+            translation="[1460, 1040]"
+            text="Press BACK to return"
+            color="#6E7377FF"
+            font="font:SmallSystemFont" />
+
+    </children>
+    <script type="text/brightscript" uri="PlayerScreen.brs" />
+</component>

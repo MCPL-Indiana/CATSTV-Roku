@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    HomeScreen.xml - Channel selection screen (mirrors tvOS ContentView)
+
+    Layout (1920x1080 FHD):
+      [0-100]   Header bar with CATS TV branding
+      [230-340] "WATCH CATS / LIVE" heading + subtitle
+      [400-700] 4 channel cards in a horizontal row
+      [1000-1080] Footer with address/contact
+-->
+<component name="HomeScreen" extends="Group" handlesBack="false">
+    <interface>
+        <!-- Notified when the user selects a channel; carries the channel assocarray -->
+        <field id="channelSelected" type="assocarray" alwaysNotify="true" />
+    </interface>
+
+    <children>
+
+        <!-- ── Background ── -->
+        <Rectangle id="bg" width="1920" height="1080" color="#282C2FFF" />
+
+        <!-- ── Header bar ── -->
+        <Rectangle id="headerBg" width="1920" height="100" color="#1E2224FF" translation="[0, 0]" />
+        <Label
+            id="logoLabel"
+            width="300" height="100"
+            text="CATS TV"
+            horizAlign="left" vertAlign="center"
+            translation="[60, 0]"
+            color="#FFFFFFFF"
+            font="font:LargeSystemFont" />
+        <Label
+            id="liveStreamsLabel"
+            width="240" height="100"
+            text="LIVE STREAMS"
+            horizAlign="right" vertAlign="center"
+            translation="[1620, 0]"
+            color="#FF5F62FF"
+            font="font:SmallBoldSystemFont" />
+
+        <!-- ── "WATCH CATS" heading (white) ── -->
+        <Label
+            id="watchCatsLabel"
+            width="620" height="70"
+            text="WATCH CATS"
+            horizAlign="right" vertAlign="center"
+            translation="[330, 230]"
+            color="#FFFFFFFF"
+            font="font:LargeSystemFont" />
+
+        <!-- ── "LIVE" heading (coral accent) ── -->
+        <Label
+            id="liveHeadingLabel"
+            width="200" height="70"
+            text="LIVE"
+            horizAlign="left" vertAlign="center"
+            translation="[968, 230]"
+            color="#FF5F62FF"
+            font="font:LargeSystemFont" />
+
+        <!-- ── Subtitle ── -->
+        <Label
+            id="subtitleLabel"
+            width="1920" height="40"
+            text="Select a channel to start watching"
+            horizAlign="center" vertAlign="center"
+            translation="[0, 310]"
+            color="#999999FF"
+            font="font:MediumSystemFont" />
+
+        <!-- ── Channel cards (centered: start=180, step=400) ── -->
+        <ChannelCard id="card0" translation="[180, 400]" />
+        <ChannelCard id="card1" translation="[580, 400]" />
+        <ChannelCard id="card2" translation="[980, 400]" />
+        <ChannelCard id="card3" translation="[1380, 400]" />
+
+        <!-- ── Footer bar ── -->
+        <Rectangle id="footerBg" width="1920" height="80" color="#1A1D1FFF" translation="[0, 1000]" />
+        <Label
+            id="footerOrg"
+            width="1920" height="40"
+            text="Community Access Television Services"
+            horizAlign="center" vertAlign="center"
+            translation="[0, 1000]"
+            color="#999999FF"
+            font="font:SmallSystemFont" />
+        <Label
+            id="footerAddress"
+            width="1920" height="40"
+            text="303 E. Kirkwood Ave.  •  Bloomington, IN 47408  •  (812) 349-3111"
+            horizAlign="center" vertAlign="center"
+            translation="[0, 1040]"
+            color="#6E7377FF"
+            font="font:SmallSystemFont" />
+
+    </children>
+    <script type="text/brightscript" uri="HomeScreen.brs" />
+</component>

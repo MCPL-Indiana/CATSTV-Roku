@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    MainScene.xml - Root scene, manages navigation between HomeScreen and PlayerScreen
+-->
+<component name="MainScene" extends="Scene" handlesBack="true">
+    <children>
+        <HomeScreen id="homeScreen" visible="true" />
+        <PlayerScreen id="playerScreen" visible="false" />
+    </children>
+    <script type="text/brightscript" uri="MainScene.brs" />
+</component>

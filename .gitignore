@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Roku packaged channel
+*.zip
+*.pkg
+
+# VS Code / editor
+.vscode/
+*.code-workspace
+
+# BrightScript / Roku dev artifacts
+out/
