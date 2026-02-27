@@ -7,10 +7,8 @@ ui_resolution=HD
 splash_color=#282C2F
 splash_min_time=1500
 
-' Icons are required for channel submission to the Roku Channel Store.
-' For development/sideloading, these can be omitted or replaced with placeholder PNGs.
-' mm_icon_focus_hd=pkg:/images/icon_focus_hd.png   (336x210 px)
-' mm_icon_side_hd=pkg:/images/icon_side_hd.png     (108x69 px)
-' splash_screen_hd=pkg:/images/splash_hd.png        (1920x1080 px)
+mm_icon_focus_hd=pkg:/images/icon_focus_hd.png
+mm_icon_side_hd=pkg:/images/icon_side_hd.png
+splash_screen_hd=pkg:/images/splash_screen_hd.png
 
 bs_const=
