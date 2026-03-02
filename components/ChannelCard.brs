@@ -1,10 +1,9 @@
 ' ChannelCard.brs - Channel card visual state management
 
 sub init()
-    m.cardBg       = m.top.findNode("cardBg")
-    m.iconLabel    = m.top.findNode("iconLabel")
-    m.nameLabel    = m.top.findNode("nameLabel")
-    m.subtitleLabel = m.top.findNode("subtitleLabel")
+    m.cardBg    = m.top.findNode("cardBg")
+    m.iconLabel = m.top.findNode("iconLabel")
+    m.nameLabel = m.top.findNode("nameLabel")
 
     m.borderTop    = m.top.findNode("borderTop")
     m.borderBottom = m.top.findNode("borderBottom")
@@ -13,9 +12,8 @@ sub init()
 end sub
 
 sub onDataChange()
-    if m.nameLabel     <> invalid then m.nameLabel.text     = m.top.channelName
-    if m.subtitleLabel <> invalid then m.subtitleLabel.text = m.top.channelSubtitle
-    if m.iconLabel     <> invalid then m.iconLabel.text     = m.top.iconText
+    if m.nameLabel  <> invalid then m.nameLabel.text  = m.top.channelName
+    if m.iconLabel  <> invalid then m.iconLabel.text  = m.top.iconText
 end sub
 
 sub onFocusChange()

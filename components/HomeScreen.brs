@@ -43,7 +43,6 @@ sub init()
     for i = 0 to 3
         card = m.top.findNode("card" + i.toStr())
         card.channelName = m.channels[i].name
-        card.channelSubtitle = m.channels[i].subtitle
         card.iconText = m.channels[i].iconText
         m.cards.push(card)
     end for

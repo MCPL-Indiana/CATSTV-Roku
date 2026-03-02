@@ -10,8 +10,6 @@ sub init()
     m.loadingLabel     = m.top.findNode("loadingLabel")
     m.overlayBg        = m.top.findNode("overlayBg")
     m.channelNameLabel = m.top.findNode("channelNameLabel")
-    m.liveDot          = m.top.findNode("liveDot")
-    m.liveLabel        = m.top.findNode("liveLabel")
 
     m.video.observeField("state", "onVideoStateChange")
 end sub
@@ -52,18 +50,16 @@ sub onVideoStateChange()
         showOverlay(false)
 
     else if state = "error"
-        m.loadingLabel.text    = "Error loading stream. Press BACK to return."
+        m.loadingLabel.text    = "Error loading stream."
         m.loadingLabel.visible = true
         showOverlay(false)
     end if
 end sub
 
-' Toggle the channel name / LIVE indicator overlay
+' Toggle the channel name overlay
 sub showOverlay(visible as Boolean)
     m.overlayBg.visible        = visible
     m.channelNameLabel.visible = visible
-    m.liveDot.visible          = visible
-    m.liveLabel.visible        = visible
 end sub
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
