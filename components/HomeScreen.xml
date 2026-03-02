@@ -7,7 +7,7 @@
 
       [0-67]   Header bar (bg full-width; text within x=54–1226)
       [153-230] "WATCH CATS / LIVE" heading + subtitle
-      [267-467] 4 channel cards: x=120,387,653,920 each 240px wide (ends at 1160 < 1226 ✓)
+      [267-497] 4 channel cards: x=120,387,653,920 each 240px wide (ends at 1160 < 1226 ✓)
       [627-720] Footer bar (bg to bottom edge; text within y=633–684 ✓)
 -->
 <component name="HomeScreen" extends="Group" handlesBack="false">
@@ -40,23 +40,23 @@
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont" />
 
-        <!-- ── "WATCH CATS" heading (white) ── -->
+        <!-- ── "WATCH CATS" heading (white) — right-aligns to screen center ── -->
         <Label
             id="watchCatsLabel"
-            width="413" height="47"
+            width="630" height="47"
             text="WATCH CATS"
             horizAlign="right" vertAlign="center"
-            translation="[220, 153]"
+            translation="[0, 153]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
 
-        <!-- ── "LIVE" heading (coral accent) ── -->
+        <!-- ── "LIVE" heading (coral accent) — left-aligns from screen center ── -->
         <Label
             id="liveHeadingLabel"
-            width="133" height="47"
-            text="LIVE"
+            width="200" height="47"
+            text=" LIVE"
             horizAlign="left" vertAlign="center"
-            translation="[645, 153]"
+            translation="[640, 153]"
             color="#FF5F62FF"
             font="font:LargeSystemFont" />
 
