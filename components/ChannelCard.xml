@@ -74,7 +74,7 @@
         <!-- Channel subtitle (up to 3 lines, no ellipsis) -->
         <Label id="subtitleLabel"
             width="254" height="80"
-            horizAlign="center" vertAlign="center"
+            horizAlign="center" vertAlign="top"
             numLines="3"
             translation="[8, 193]"
             color="#999999FF"

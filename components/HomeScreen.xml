@@ -40,23 +40,23 @@
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont" />
 
-        <!-- ── "WATCH CATS" heading (white) — right-aligns to screen center ── -->
+        <!-- ── "WATCH CATS" heading (white) — auto-width; BrightScript centers both ── -->
         <Label
             id="watchCatsLabel"
-            width="640" height="47"
-            text="WATCH CATS"
-            horizAlign="right" vertAlign="center"
+            height="47"
+            text="WATCH CATS "
+            horizAlign="left" vertAlign="center"
             translation="[0, 153]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
 
-        <!-- ── "LIVE" heading (coral accent) — left-aligns from screen center ── -->
+        <!-- ── "LIVE" heading (coral accent) — auto-width; BrightScript centers both ── -->
         <Label
             id="liveHeadingLabel"
-            width="200" height="47"
-            text=" LIVE"
+            height="47"
+            text="LIVE"
             horizAlign="left" vertAlign="center"
-            translation="[640, 153]"
+            translation="[0, 153]"
             color="#FF5F62FF"
             font="font:LargeSystemFont" />
 
