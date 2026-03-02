@@ -26,7 +26,7 @@
 
         <!-- ── Channel info overlay (top-left, within safe zone x≥54, y≥40) ── -->
         <Rectangle id="overlayBg"
-            width="320" height="40"
+            width="260" height="40"
             color="#00000099"
             translation="[54, 43]"
             visible="false" />
@@ -39,23 +39,6 @@
             font="font:MediumBoldSystemFont"
             visible="false" />
 
-        <!-- Coral live dot: vertically centered in the 40px overlay (43+16=59) -->
-        <Rectangle id="liveDot"
-            width="8" height="8"
-            color="#FF5F62FF"
-            translation="[315, 59]"
-            visible="false" />
-
-        <!-- LIVE label -->
-        <Label id="liveLabel"
-            width="40" height="20"
-            text="LIVE"
-            horizAlign="left" vertAlign="center"
-            translation="[328, 53]"
-            color="#FF5F62FF"
-            font="font:SmallBoldSystemFont"
-            visible="false" />
-
         <!-- ── Loading / error message (centered) ── -->
         <Label id="loadingLabel"
             width="1280" height="720"
@@ -64,15 +47,6 @@
             color="#FFFFFFFF"
             font="font:LargeSystemFont"
             visible="true" />
-
-        <!-- Back hint — bottom-right, within safe zone (ends at x=1226, centers at y=666 ✓) -->
-        <Label id="backHint"
-            width="293" height="27"
-            horizAlign="right" vertAlign="center"
-            translation="[933, 653]"
-            text="Press BACK to return"
-            color="#6E7377FF"
-            font="font:SmallSystemFont" />
 
     </children>
     <script type="text/brightscript" uri="PlayerScreen.brs" />

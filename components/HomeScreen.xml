@@ -6,8 +6,8 @@
     Safe zone: x=54–1226, y=40–680 (~4% from each edge)
 
       [0-67]   Header bar (bg full-width; text within x=54–1226)
-      [153-230] "WATCH CATS / LIVE" heading + subtitle
-      [267-497] 4 channel cards: x=120,387,653,920 each 240px wide (ends at 1160 < 1226 ✓)
+      [153-230] "WATCH CATS / LIVE" heading + subtitle (both centered at x=640)
+      [267-547] 4 channel cards: x=60,357,654,951 each 270px wide (ends at 1221 < 1226 ✓)
       [627-720] Footer bar (bg to bottom edge; text within y=633–684 ✓)
 -->
 <component name="HomeScreen" extends="Group" handlesBack="false">
@@ -40,23 +40,23 @@
             color="#FF5F62FF"
             font="font:SmallBoldSystemFont" />
 
-        <!-- ── "WATCH CATS" heading (white) — right-aligns to screen center ── -->
+        <!-- ── "WATCH CATS" heading (white) — auto-width; BrightScript centers both ── -->
         <Label
             id="watchCatsLabel"
-            width="630" height="47"
-            text="WATCH CATS"
-            horizAlign="right" vertAlign="center"
+            height="47"
+            text="WATCH CATS "
+            horizAlign="left" vertAlign="center"
             translation="[0, 153]"
             color="#FFFFFFFF"
             font="font:LargeSystemFont" />
 
-        <!-- ── "LIVE" heading (coral accent) — left-aligns from screen center ── -->
+        <!-- ── "LIVE" heading (coral accent) — auto-width; BrightScript centers both ── -->
         <Label
             id="liveHeadingLabel"
-            width="200" height="47"
-            text=" LIVE"
+            height="47"
+            text="LIVE"
             horizAlign="left" vertAlign="center"
-            translation="[640, 153]"
+            translation="[0, 153]"
             color="#FF5F62FF"
             font="font:LargeSystemFont" />
 
@@ -71,12 +71,12 @@
             font="font:MediumSystemFont" />
 
         <!-- ── Channel cards ──
-             4 × 240px wide + 3 × 27px gaps = 1041px total
-             Start x=120, step=267; last card ends at 920+240=1160 < 1226 safe zone ✓ -->
-        <ChannelCard id="card0" translation="[120, 267]" />
-        <ChannelCard id="card1" translation="[387, 267]" />
-        <ChannelCard id="card2" translation="[653, 267]" />
-        <ChannelCard id="card3" translation="[920, 267]" />
+             4 × 270px wide + 3 × 27px gaps = 1161px total
+             Start x=60, step=297; last card ends at 951+270=1221 < 1226 safe zone ✓ -->
+        <ChannelCard id="card0" translation="[60, 267]" />
+        <ChannelCard id="card1" translation="[357, 267]" />
+        <ChannelCard id="card2" translation="[654, 267]" />
+        <ChannelCard id="card3" translation="[951, 267]" />
 
         <!-- ── Footer bar ──
              Background extends to screen bottom (fine for a decoration rect).
