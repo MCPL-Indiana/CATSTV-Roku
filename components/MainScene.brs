@@ -35,14 +35,32 @@ sub init()
     ' ─────────────────────────────────────────────────────────────────────────
 
     m.homeScreen.observeField("channelSelected", "onChannelSelected")
-    m.playerScreen.observeField("playerClosed", "onPlayerClosed")
+    m.homeScreen.observeField("videoSelected",   "onVideoSelected")
+    m.playerScreen.observeField("playerClosed",  "onPlayerClosed")
 
     m.homeScreen.setFocus(true)
 end sub
 
+' Live stream selected — pass channelData directly to PlayerScreen
 sub onChannelSelected(event as Object)
     channelData = event.getData()
     if channelData = invalid then return
+
+    m.playerScreen.channelData = channelData
+    m.playerScreen.visible = true
+    m.homeScreen.visible = false
+    m.playerScreen.setFocus(true)
+end sub
+
+' VOD video selected — adapt video data to the channelData format PlayerScreen expects
+sub onVideoSelected(event as Object)
+    videoData = event.getData()
+    if videoData = invalid then return
+
+    channelData = {
+        name:      videoData.title,
+        streamUrl: videoData.streamUrl
+    }
 
     m.playerScreen.channelData = channelData
     m.playerScreen.visible = true

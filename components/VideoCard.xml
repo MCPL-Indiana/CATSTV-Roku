@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    VideoCard.xml - Focusable video thumbnail card
+    (mirrors tvOS CityMeetingCardView)
+
+    Card anatomy (240 × 160):
+      [0-110]   Thumbnail image (Poster); dark #4A5459 bg shown while loading
+      [110-160] Title area: up to 2 lines white text on #636D72 bg
+
+    Focus state: coral (#FF5F62) border ring, darker (#4A5459) background.
+-->
+<component name="VideoCard" extends="Group">
+    <interface>
+        <field id="videoTitle"   type="string"  onChange="onTitleChange" />
+        <field id="thumbnailUrl" type="string"  onChange="onThumbChange" />
+        <field id="isFocused"    type="boolean" value="false" onChange="onFocusChange" />
+    </interface>
+
+    <children>
+
+        <!-- Coral focus border (behind everything; 4px ring via oversized rect) -->
+        <Rectangle id="focusBorder" width="248" height="168" color="#00000000" translation="[-4, -4]" />
+
+        <!-- Card background (also acts as thumbnail placeholder color) -->
+        <Rectangle id="cardBg" width="240" height="160" color="#636D72FF" />
+
+        <!-- Dark thumbnail area shown while Poster image loads -->
+        <Rectangle id="thumbBg" width="240" height="110" color="#4A5459FF" />
+
+        <!-- Thumbnail image; loadDisplayMode fills the 240×110 area -->
+        <Poster id="thumb" width="240" height="110" loadDisplayMode="scaleToFill" />
+
+        <!-- Title area background -->
+        <Rectangle id="titleBg" width="240" height="50" color="#636D72FF" translation="[0, 110]" />
+
+        <!-- Title text (up to 2 lines, 11px left/right padding) -->
+        <Label
+            id="titleLabel"
+            width="218" height="50"
+            numLines="2"
+            horizAlign="left" vertAlign="center"
+            translation="[11, 110]"
+            color="#FFFFFFFF"
+            font="font:SmallSystemFont" />
+
+    </children>
+    <script type="text/brightscript" uri="VideoCard.brs" />
+</component>

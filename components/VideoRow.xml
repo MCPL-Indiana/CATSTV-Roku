@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    VideoRow.xml - Horizontal scrollable row of video cards with section header
+    (mirrors tvOS CityMeetingsSection / CommunityVideosSection / CATSWeekSection)
+
+    Row anatomy (1280 wide × 204 tall):
+      [y=0-34]    Section header: coral icon badge + bold section title
+      [y=44-204]  ScrollRect clip area (width=1160, x=60) containing VideoCards
+                  Cards: 240×160 each, 24px gap → 264px step
+                  4 cards visible at once (4×264=1056px ≤ 1160px)
+
+    Focus is managed externally by HomeScreen.brs via the focusedIndex field.
+    isRowFocused drives optional row-level visual state.
+-->
+<component name="VideoRow" extends="Group">
+    <interface>
+        <field id="sectionTitle" type="string"  onChange="onMetaChange" />
+        <field id="iconLetter"   type="string"  onChange="onMetaChange" />
+        <field id="videos"       type="array"   onChange="onVideosChange" />
+        <!-- -1 = no card focused; ≥0 = index of focused card -->
+        <field id="focusedIndex" type="integer" value="-1" onChange="onFocusedIndexChange" />
+        <field id="isRowFocused" type="boolean" value="false" />
+    </interface>
+
+    <children>
+
+        <!-- Section icon badge (coral square, 34×34) -->
+        <Rectangle id="iconBg" width="34" height="34" color="#FF5F62FF" translation="[60, 0]" />
+        <Label
+            id="iconLabel"
+            width="34" height="34"
+            horizAlign="center" vertAlign="center"
+            translation="[60, 0]"
+            color="#FFFFFFFF"
+            font="font:SmallBoldSystemFont" />
+
+        <!-- Section title (white bold, e.g. "GOVERNMENT MEETINGS") -->
+        <Label
+            id="sectionTitleLabel"
+            width="600" height="34"
+            horizAlign="left" vertAlign="center"
+            translation="[104, 0]"
+            color="#FFFFFFFF"
+            font="font:MediumBoldSystemFont" />
+
+        <!-- Loading indicator (shown until videos arrive) -->
+        <Label
+            id="loadingLabel"
+            width="400" height="26"
+            text="Loading..."
+            horizAlign="left" vertAlign="center"
+            translation="[60, 52]"
+            color="#999999FF"
+            font="font:SmallSystemFont"
+            visible="true" />
+
+        <!-- Error indicator (shown if fetch fails or no videos) -->
+        <Label
+            id="errorLabel"
+            width="700" height="26"
+            text=""
+            horizAlign="left" vertAlign="center"
+            translation="[60, 52]"
+            color="#FF5F62FF"
+            font="font:SmallSystemFont"
+            visible="false" />
+
+        <!-- Horizontal clip area — ScrollRect clips cards that scroll off-screen -->
+        <ScrollRect id="cardsClip" width="1160" height="160" translation="[60, 44]">
+            <Group id="cardsGroup" />
+        </ScrollRect>
+
+    </children>
+    <script type="text/brightscript" uri="VideoRow.brs" />
+</component>
