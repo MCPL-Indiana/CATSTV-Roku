@@ -4,7 +4,7 @@
 ' The row handles its own horizontal scroll to keep the focused card visible.
 
 sub init()
-    m.iconLabel         = m.top.findNode("iconLabel")
+    m.iconPoster        = m.top.findNode("iconPoster")
     m.sectionTitleLabel = m.top.findNode("sectionTitleLabel")
     m.loadingLabel      = m.top.findNode("loadingLabel")
     m.errorLabel        = m.top.findNode("errorLabel")
@@ -20,10 +20,10 @@ sub init()
 end sub
 
 sub onMetaChange()
-    if m.top.iconLetter <> invalid
-        m.iconLabel.text = m.top.iconLetter
+    if m.iconPoster <> invalid and m.top.iconImage <> invalid and m.top.iconImage <> ""
+        m.iconPoster.uri = m.top.iconImage
     end if
-    if m.top.sectionTitle <> invalid
+    if m.sectionTitleLabel <> invalid and m.top.sectionTitle <> invalid
         m.sectionTitleLabel.text = m.top.sectionTitle
     end if
 end sub

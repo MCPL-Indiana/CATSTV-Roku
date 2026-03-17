@@ -25,6 +25,11 @@ sub fetchVideos()
         return
     end if
 
+    ' Strip UTF-8 BOM (U+FEFF) if the server included one
+    if Left(response, 1) = Chr(65279)
+        response = Mid(response, 2)
+    end if
+
     jsonObj = ParseJson(response)
     if jsonObj = invalid
         m.top.result = { sectionId: m.top.sectionId, videos: invalid, error: "Parse error" }

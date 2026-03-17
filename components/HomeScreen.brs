@@ -3,42 +3,41 @@
 ' Focus sections: "channels" | "gov" | "community" | "catsweek"
 '
 ' Vertical scroll (contentGroup.translation.y):
-'   0    → live channels visible; video rows peek below the fold
-'   -286 → "MOST RECENT VIDEOS" heading lands at y=70 just below header;
-'           all three video rows fill y=114–754
+'   0    → live channels visible; banner at top
+'   -528 → "MOST RECENT VIDEOS" heading lands at y=10;
+'           all three video rows fill y=52–692
 '
 ' All key events are handled here — child components are purely visual.
 ' Video focus state is communicated via VideoRow.focusedIndex (integer field).
 
 sub init()
-    nl = chr(10)
     m.channels = [
         {
             id: "city",
             name: "CITY CHANNEL",
-            subtitle: "Bloomington City" + nl + "Government",
-            iconText: "C",
+            subtitle: "Bloomington City Government",
+            iconImage: "pkg:/images/icon_city.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/f8f183aa686dea8fded26ffa5475d3f5/source/index.m3u8"
         },
         {
             id: "county",
             name: "COUNTY CHANNEL",
-            subtitle: "Monroe County" + nl + "Government",
-            iconText: "M",
+            subtitle: "Monroe County Government",
+            iconImage: "pkg:/images/icon_county.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/717441a0f28e627c7d64f28827fd262f/source/index.m3u8"
         },
         {
             id: "library",
             name: "LIBRARY CHANNEL",
-            subtitle: "Monroe County" + nl + "Public Library",
-            iconText: "L",
+            subtitle: "Monroe County Public Library",
+            iconImage: "pkg:/images/icon_library.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/cfa6d8a759fc6aedf7e8a04c4ad003e6/source/index.m3u8"
         },
         {
             id: "special2",
             name: "SPECIAL 2",
-            subtitle: "Special" + nl + "Programming",
-            iconText: "S",
+            subtitle: "Special Programming",
+            iconImage: "pkg:/images/icon_special.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/86d196fc-7e71-42df-c6f5-d1eafa67f0c1/index.m3u8"
         }
     ]
@@ -53,8 +52,9 @@ sub init()
     m.cards = []
     for i = 0 to 3
         card = m.top.findNode("card" + i.toStr())
-        card.channelName = m.channels[i].name
-        card.iconText    = m.channels[i].iconText
+        card.channelName     = m.channels[i].name
+        card.channelSubtitle = m.channels[i].subtitle
+        card.iconImage       = m.channels[i].iconImage
         m.cards.push(card)
     end for
 
@@ -66,17 +66,22 @@ sub init()
     m.communityRow = m.top.findNode("communityRow")
     m.catsweekRow  = m.top.findNode("catsweekRow")
 
-    m.govRow.sectionTitle      = "GOVERNMENT MEETINGS"
-    m.govRow.iconLetter        = "G"
+    m.govRow.sectionTitle       = "GOVERNMENT MEETINGS"
+    m.govRow.iconImage          = "pkg:/images/icon_city.png"
     m.communityRow.sectionTitle = "COMMUNITY VIDEOS"
-    m.communityRow.iconLetter   = "C"
-    m.catsweekRow.sectionTitle = "CATSWEEK"
-    m.catsweekRow.iconLetter   = "W"
+    m.communityRow.iconImage    = "pkg:/images/icon_community.png"
+    m.catsweekRow.sectionTitle  = "CATSWEEK"
+    m.catsweekRow.iconImage     = "pkg:/images/icon_catsweek.png"
+
+    ' ── Banner image ─────────────────────────────────────────────────────────
+    bannerImage = m.top.findNode("bannerImage")
+    if bannerImage <> invalid
+        bannerImage.uri = "pkg:/images/channels_banner.jpg"
+    end if
 
     ' ── Scroll animation ─────────────────────────────────────────────────────
     m.scrollAnim   = m.top.findNode("scrollAnim")
     m.scrollInterp = m.top.findNode("scrollInterp")
-    m.scrollInterp.observedNode = m.contentGroup
 
     ' ── Initialize UI ────────────────────────────────────────────────────────
     updateChannelFocus()
@@ -95,8 +100,8 @@ sub centerHeading()
     liveWidth  = liveLabel.boundingRect().width
 
     startX = int((1280 - watchWidth - liveWidth) / 2)
-    watchLabel.translation = [startX, 70]
-    liveLabel.translation  = [startX + watchWidth, 70]
+    watchLabel.translation = [startX, 222]
+    liveLabel.translation  = [startX + watchWidth, 222]
 end sub
 
 ' Launch three background Task nodes in parallel (one per JSON feed)
@@ -178,7 +183,7 @@ sub setFocusSection(section as String)
         m.communityRow.focusedIndex = -1
         m.catsweekRow.focusedIndex  = -1
     else
-        scrollTo(-286.0)
+        scrollTo(-528.0)
 
         ' Defocus all channel cards
         for i = 0 to m.cards.count() - 1

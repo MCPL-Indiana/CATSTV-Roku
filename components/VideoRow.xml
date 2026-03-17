@@ -5,7 +5,7 @@
 
     Row anatomy (1280 wide × 204 tall):
       [y=0-34]    Section header: coral icon badge + bold section title
-      [y=44-204]  ScrollRect clip area (width=1160, x=60) containing VideoCards
+      [y=44-204]  Clipped Group (width=1160, x=60) containing VideoCards
                   Cards: 240×160 each, 24px gap → 264px step
                   4 cards visible at once (4×264=1056px ≤ 1160px)
 
@@ -15,7 +15,7 @@
 <component name="VideoRow" extends="Group">
     <interface>
         <field id="sectionTitle" type="string"  onChange="onMetaChange" />
-        <field id="iconLetter"   type="string"  onChange="onMetaChange" />
+        <field id="iconImage"    type="string"  onChange="onMetaChange" />
         <field id="videos"       type="array"   onChange="onVideosChange" />
         <!-- -1 = no card focused; ≥0 = index of focused card -->
         <field id="focusedIndex" type="integer" value="-1" onChange="onFocusedIndexChange" />
@@ -26,13 +26,11 @@
 
         <!-- Section icon badge (coral square, 34×34) -->
         <Rectangle id="iconBg" width="34" height="34" color="#FF5F62FF" translation="[60, 0]" />
-        <Label
-            id="iconLabel"
-            width="34" height="34"
-            horizAlign="center" vertAlign="center"
-            translation="[60, 0]"
-            color="#FFFFFFFF"
-            font="font:SmallBoldSystemFont" />
+        <!-- Icon image overlaid on coral badge (white icon, 24×24 centered in 34×34) -->
+        <Poster id="iconPoster"
+            width="24" height="24"
+            loadDisplayMode="scaleToFit"
+            translation="[65, 5]" />
 
         <!-- Section title (white bold, e.g. "GOVERNMENT MEETINGS") -->
         <Label
@@ -65,10 +63,12 @@
             font="font:SmallSystemFont"
             visible="false" />
 
-        <!-- Horizontal clip area — ScrollRect clips cards that scroll off-screen -->
-        <ScrollRect id="cardsClip" width="1160" height="160" translation="[60, 44]">
+        <!-- Horizontal clip area — Group with clippingRect replaces ScrollRect -->
+        <Group id="cardsClip"
+            clippingRect="[0, 0, 1160, 160]"
+            translation="[60, 44]">
             <Group id="cardsGroup" />
-        </ScrollRect>
+        </Group>
 
     </children>
     <script type="text/brightscript" uri="VideoRow.brs" />

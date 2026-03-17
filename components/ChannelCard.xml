@@ -2,28 +2,30 @@
 <!--
     ChannelCard.xml - Focusable channel card (mirrors tvOS ChannelCardView)
 
-    Coordinate space: HD 1280x720 (all values scaled 2/3 from original FHD design)
+    Coordinate space: HD 1280x720
 
-    Card anatomy (270 x 200):
-      [0-145]  Thumbnail area with dark bg + icon letter
-      [117-138] LIVE badge (coral pill, 76px wide centered)
-      [150-190] Channel name (bold, turns coral when focused)
+    Card anatomy (270 x 220):
+      [0-145]   Thumbnail area with dark bg + channel icon image
+      [117-138]  LIVE badge (coral pill, centered)
+      [150-178]  Channel name (bold, turns coral when focused)
+      [180-214]  Subtitle (small gray text)
 
     Focus state: darker bg + coral name text + coral border outline.
     Borders are rendered last so they appear on top of all fill content.
 -->
-<component name="ChannelCard" extends="Group" focusable="true">
+<component name="ChannelCard" extends="Group">
     <interface>
-        <field id="channelName" type="string"  onChange="onDataChange" />
-        <field id="iconText"    type="string"  onChange="onDataChange" />
-        <field id="isFocused"   type="boolean" value="false" onChange="onFocusChange" />
+        <field id="channelName"     type="string"  onChange="onDataChange" />
+        <field id="channelSubtitle" type="string"  onChange="onDataChange" />
+        <field id="iconImage"       type="string"  onChange="onDataChange" />
+        <field id="isFocused"       type="boolean" value="false" onChange="onFocusChange" />
     </interface>
 
     <children>
 
         <!-- Outer card background -->
         <Rectangle id="cardBg"
-            width="270" height="200"
+            width="270" height="220"
             color="#636D72FF"
             blendingEnabled="true" />
 
@@ -33,13 +35,11 @@
             color="#4A5459FF"
             translation="[0, 0]" />
 
-        <!-- Channel icon letter (large, centered in thumbnail) -->
-        <Label id="iconLabel"
-            width="270" height="87"
-            horizAlign="center" vertAlign="center"
-            translation="[0, 7]"
-            color="#FFFFFFFF"
-            font="font:LargeSystemFont" />
+        <!-- Channel icon image (centered in thumbnail) -->
+        <Poster id="iconPoster"
+            width="80" height="80"
+            loadDisplayMode="scaleToFit"
+            translation="[95, 10]" />
 
         <!-- LIVE badge background (coral) -->
         <Rectangle id="liveBadgeBg"
@@ -58,17 +58,25 @@
 
         <!-- Channel name -->
         <Label id="nameLabel"
-            width="254" height="40"
+            width="254" height="28"
             horizAlign="center" vertAlign="center"
             translation="[8, 150]"
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont" />
 
+        <!-- Channel subtitle -->
+        <Label id="subtitleLabel"
+            width="254" height="34"
+            horizAlign="center" vertAlign="center"
+            translation="[8, 180]"
+            color="#999999FF"
+            font="font:SmallSystemFont" />
+
         <!-- Coral border — rendered last so it draws on top of all fill content -->
         <Rectangle id="borderTop"    width="270" height="2"   color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderBottom" width="270" height="2"   color="#00000000" translation="[0, 198]" />
-        <Rectangle id="borderLeft"   width="2"   height="200" color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderRight"  width="2"   height="200" color="#00000000" translation="[268, 0]" />
+        <Rectangle id="borderBottom" width="270" height="2"   color="#00000000" translation="[0, 218]" />
+        <Rectangle id="borderLeft"   width="2"   height="220" color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderRight"  width="2"   height="220" color="#00000000" translation="[268, 0]" />
 
     </children>
     <script type="text/brightscript" uri="ChannelCard.brs" />
