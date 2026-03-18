@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/comullis/Documents/CATSTV-AppleTV -type f \\\\\\(-name *.png -o -name *.jpg -o -name *.jpeg \\\\\\))",
+      "Bash(python3 -c \"from PIL import Image; print\\(''Pillow OK''\\)\")",
+      "Bash(python3:*)",
+      "Bash(zip:*)",
+      "Bash(unzip -l ~/Desktop/CatsTV-Roku.zip)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(rm:*)",
+      "WebFetch(domain:developer.roku.com)",
+      "WebSearch",
+      "WebFetch(domain:sdkdocs-archive.roku.com)",
+      "WebFetch(domain:community.roku.com)",
+      "WebFetch(domain:roku.home.blog)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

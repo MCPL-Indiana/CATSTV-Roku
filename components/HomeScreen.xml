@@ -1,103 +1,113 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    HomeScreen.xml - Channel selection screen (mirrors tvOS ContentView)
+    HomeScreen.xml - Channel selection + Recent Videos browser
+    (mirrors tvOS ContentView: banner → live channels → three video sections)
 
-    Coordinate space: HD 1280x720 (ui_resolution=HD in manifest)
-    Safe zone: x=54–1226, y=40–680 (~4% from each edge)
+    Coordinate space: HD 1280×720
 
-      [0-67]   Header bar (bg full-width; text within x=54–1226)
-      [153-230] "WATCH CATS / LIVE" heading + subtitle (both centered at x=640)
-      [267-547] 4 channel cards: x=60,357,654,951 each 270px wide (ends at 1221 < 1226 ✓)
-      [627-720] Footer bar (bg to bottom edge; text within y=633–684 ✓)
+    Layout — contentGroup scrolls vertically:
+      [y=0]    channels4_banner.jpg (1280×212)
+      [y=222]  "WATCH CATS " + "LIVE" heading
+      [y=266]  Subtitle: "Select a channel to start watching"
+      [y=300]  4 channel cards (270×220), x=60, 357, 654, 951
+      [y=530]  separator line (1160×2)
+      [y=538]  "MOST RECENT VIDEOS" heading (coral)
+      [y=580]  Government Meetings VideoRow
+      [y=784]  Community Videos VideoRow
+      [y=988]  CATSWeek VideoRow
+
+    Vertical scroll positions (contentGroup.translation.y):
+      0    → channels section visible; banner at top
+      -528 → "MOST RECENT VIDEOS" lands at y=10; video rows fill y=52–692
 -->
 <component name="HomeScreen" extends="Group" handlesBack="false">
     <interface>
         <field id="channelSelected" type="assocarray" alwaysNotify="true" />
+        <field id="videoSelected"   type="assocarray" alwaysNotify="true" />
     </interface>
 
     <children>
 
-        <!-- ── Background ── -->
+        <!-- ── Full-screen background ── -->
         <Rectangle id="bg" width="1280" height="720" color="#282C2FFF" />
 
-        <!-- ── Header bar ── -->
-        <Rectangle id="headerBg" width="1280" height="67" color="#1E2224FF" translation="[0, 0]" />
-        <!-- x=54 left safe zone; right label ends at 1053+160=1213 < 1226 right safe zone -->
-        <Label
-            id="logoLabel"
-            width="200" height="67"
-            text="CATS TV"
-            horizAlign="left" vertAlign="center"
-            translation="[54, 0]"
-            color="#FFFFFFFF"
-            font="font:LargeSystemFont" />
-        <Label
-            id="liveStreamsLabel"
-            width="160" height="67"
-            text="LIVE STREAMS"
-            horizAlign="right" vertAlign="center"
-            translation="[1053, 0]"
-            color="#FF5F62FF"
-            font="font:SmallBoldSystemFont" />
+        <!-- ── Scrollable content group ──────────────────────────────────────
+             BrightScript animates translation.y between 0 and -528.         -->
+        <Group id="contentGroup">
 
-        <!-- ── "WATCH CATS" heading (white) — auto-width; BrightScript centers both ── -->
-        <Label
-            id="watchCatsLabel"
-            height="47"
-            text="WATCH CATS "
-            horizAlign="left" vertAlign="center"
-            translation="[0, 153]"
-            color="#FFFFFFFF"
-            font="font:LargeSystemFont" />
+            <!-- ── Banner image (mirrors tvOS ChannelsBanner at top of scroll) ── -->
+            <Poster id="bannerImage"
+                width="1280" height="212"
+                loadDisplayMode="scaleToFit"
+                translation="[0, 0]" />
 
-        <!-- ── "LIVE" heading (coral accent) — auto-width; BrightScript centers both ── -->
-        <Label
-            id="liveHeadingLabel"
-            height="47"
-            text="LIVE"
-            horizAlign="left" vertAlign="center"
-            translation="[0, 153]"
-            color="#FF5F62FF"
-            font="font:LargeSystemFont" />
+            <!-- "WATCH CATS" (white) + "LIVE" (coral) — centered by BrightScript -->
+            <Label
+                id="watchCatsLabel"
+                height="40"
+                text="WATCH CATS "
+                horizAlign="left" vertAlign="center"
+                translation="[0, 222]"
+                color="#FFFFFFFF"
+                font="font:LargeSystemFont" />
+            <Label
+                id="liveHeadingLabel"
+                height="40"
+                text="LIVE"
+                horizAlign="left" vertAlign="center"
+                translation="[0, 222]"
+                color="#FF5F62FF"
+                font="font:LargeSystemFont" />
 
-        <!-- ── Subtitle ── -->
-        <Label
-            id="subtitleLabel"
-            width="1280" height="27"
-            text="Select a channel to start watching"
-            horizAlign="center" vertAlign="center"
-            translation="[0, 207]"
-            color="#999999FF"
-            font="font:MediumSystemFont" />
+            <!-- Subtitle -->
+            <Label
+                id="subtitleLabel"
+                width="800" height="26"
+                text="Select a channel to start watching"
+                horizAlign="center" vertAlign="center"
+                translation="[240, 266]"
+                color="#999999FF"
+                font="font:SmallSystemFont" />
 
-        <!-- ── Channel cards ──
-             4 × 270px wide + 3 × 27px gaps = 1161px total
-             Start x=60, step=297; last card ends at 951+270=1221 < 1226 safe zone ✓ -->
-        <ChannelCard id="card0" translation="[60, 267]" />
-        <ChannelCard id="card1" translation="[357, 267]" />
-        <ChannelCard id="card2" translation="[654, 267]" />
-        <ChannelCard id="card3" translation="[951, 267]" />
+            <!-- ── Channel cards: x = 60, 357, 654, 951; y = 300 ──
+                 4 × 270px + 3 × 27px gap = 1161px; last edge = 951+270 = 1221 < 1226 ✓ -->
+            <ChannelCard id="card0" translation="[60,  300]" />
+            <ChannelCard id="card1" translation="[357, 300]" />
+            <ChannelCard id="card2" translation="[654, 300]" />
+            <ChannelCard id="card3" translation="[951, 300]" />
 
-        <!-- ── Footer bar ──
-             Background extends to screen bottom (fine for a decoration rect).
-             Text within safe zone: org centers at y=647 ✓, address centers at y=670 ✓ -->
-        <Rectangle id="footerBg" width="1280" height="93" color="#1A1D1FFF" translation="[0, 627]" />
-        <Label
-            id="footerOrg"
-            width="1280" height="27"
-            text="Community Access Television Services"
-            horizAlign="center" vertAlign="center"
-            translation="[0, 633]"
-            color="#999999FF"
-            font="font:SmallSystemFont" />
-        <Label
-            id="footerAddress"
-            width="1280" height="27"
-            text="303 E. Kirkwood Ave.  •  Bloomington, IN 47408  •  (812) 349-3111"
-            horizAlign="center" vertAlign="center"
-            translation="[0, 657]"
-            color="#6E7377FF"
-            font="font:SmallSystemFont" />
+            <!-- ── Divider between live channels and recent videos ── -->
+            <Rectangle id="separator"
+                width="1160" height="2"
+                color="#636D72FF"
+                translation="[60, 530]" />
+
+            <!-- ── "MOST RECENT VIDEOS" section heading (coral, centered) ── -->
+            <Label
+                id="recentLabel"
+                width="1280" height="34"
+                text="MOST RECENT VIDEOS"
+                horizAlign="center" vertAlign="center"
+                translation="[0, 538]"
+                color="#FF5F62FF"
+                font="font:SmallBoldSystemFont" />
+
+            <!-- ── Four video rows (City, County, Community, CATSWeek) ── -->
+            <VideoRow id="cityRow"      translation="[0, 580]" />
+            <VideoRow id="countyRow"    translation="[0, 880]" />
+            <VideoRow id="communityRow" translation="[0, 1180]" />
+            <VideoRow id="catsweekRow"  translation="[0, 1480]" />
+
+        </Group>
+        <!-- ──────────────────────────────────────────────────────────────── -->
+
+        <!-- ── Scroll animation (animates contentGroup.translation) ── -->
+        <Animation id="scrollAnim" duration="0.25" easeFunction="outQuad" repeat="false">
+            <Vector2DFieldInterpolator
+                id="scrollInterp"
+                fieldToInterp="contentGroup.translation"
+                key="[0.0, 1.0]" />
+        </Animation>
 
     </children>
     <script type="text/brightscript" uri="HomeScreen.brs" />

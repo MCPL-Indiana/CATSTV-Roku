@@ -1,10 +1,7 @@
-' ChannelCard.brs - Channel card visual state management
+' ChannelCard.brs - Full-image channel card
 
 sub init()
-    m.cardBg    = m.top.findNode("cardBg")
-    m.iconLabel = m.top.findNode("iconLabel")
-    m.nameLabel = m.top.findNode("nameLabel")
-
+    m.cardPoster   = m.top.findNode("cardPoster")
     m.borderTop    = m.top.findNode("borderTop")
     m.borderBottom = m.top.findNode("borderBottom")
     m.borderLeft   = m.top.findNode("borderLeft")
@@ -12,23 +9,18 @@ sub init()
 end sub
 
 sub onDataChange()
-    if m.nameLabel  <> invalid then m.nameLabel.text  = m.top.channelName
-    if m.iconLabel  <> invalid then m.iconLabel.text  = m.top.iconText
+    if m.cardPoster <> invalid and m.top.iconImage <> invalid and m.top.iconImage <> ""
+        m.cardPoster.uri = m.top.iconImage
+    end if
 end sub
 
 sub onFocusChange()
     if m.top.isFocused
-        ' Focused: darker background, coral name, coral border
-        m.cardBg.color       = "#4A5459FF"
-        m.nameLabel.color    = "#FF5F62FF"
         m.borderTop.color    = "#FF5F62FF"
         m.borderBottom.color = "#FF5F62FF"
         m.borderLeft.color   = "#FF5F62FF"
         m.borderRight.color  = "#FF5F62FF"
     else
-        ' Unfocused: medium gray background, white name, no border
-        m.cardBg.color       = "#636D72FF"
-        m.nameLabel.color    = "#FFFFFFFF"
         m.borderTop.color    = "#00000000"
         m.borderBottom.color = "#00000000"
         m.borderLeft.color   = "#00000000"

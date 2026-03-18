@@ -22,7 +22,7 @@
 
         <!-- Full-screen video (HLS via Roku Video node).
              1280x720 matches ui_resolution=HD. Roku upscales to 1080p/4K if the TV supports it. -->
-        <Video id="video" width="1280" height="720" translation="[0, 0]" enableUI="false" />
+        <Video id="video" width="1280" height="720" translation="[0, 0]" />
 
         <!-- ── Channel info overlay (top-left, within safe zone x≥54, y≥40) ── -->
         <Rectangle id="overlayBg"
@@ -47,6 +47,7 @@
             color="#FFFFFFFF"
             font="font:LargeSystemFont"
             visible="true" />
+
 
     </children>
     <script type="text/brightscript" uri="PlayerScreen.brs" />

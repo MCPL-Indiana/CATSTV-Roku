@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    FetchVideosTask.xml - Background Task node that fetches and parses a video JSON feed
+    (mirrors Swift actor services: CityMeetingsService, CommunityVideosService, CATSWeekService)
+
+    Input fields:
+      url       - HTTPS endpoint to fetch (e.g. https://3w.mcpl.info/catsjson/city.json)
+      sectionId - Caller-provided tag returned in result for identification
+
+    Output field:
+      result.sectionId - echoed sectionId
+      result.videos    - array of { title, streamUrl, thumbnailUrl } or invalid on error
+      result.error     - error description string (only present on failure)
+-->
+<component name="FetchVideosTask" extends="Task">
+    <interface>
+        <field id="url"       type="string" />
+        <field id="sectionId" type="string" />
+        <field id="result"    type="assocarray" alwaysNotify="true" />
+    </interface>
+    <script type="text/brightscript" uri="FetchVideosTask.brs" />
+</component>

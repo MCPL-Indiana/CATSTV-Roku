@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    VideoCard.xml - Focusable video thumbnail card
+    (mirrors tvOS CityMeetingCardView)
+
+    Card anatomy (240 × 160):
+      [0-110]   Thumbnail image (Poster); dark #4A5459 bg shown while loading
+      [110-160] Title area: up to 2 lines white text on #636D72 bg
+
+    Focus state: coral (#FF5F62) border ring, darker (#4A5459) background.
+-->
+<component name="VideoCard" extends="Group">
+    <interface>
+        <field id="videoTitle"   type="string"  onChange="onTitleChange" />
+        <field id="thumbnailUrl" type="string"  onChange="onThumbChange" />
+        <field id="isFocused"    type="boolean" value="false" onChange="onFocusChange" />
+    </interface>
+
+    <children>
+
+        <!-- Coral focus border (7px ring via oversized rect) -->
+        <Rectangle id="focusBorder" width="284" height="184" color="#00000000" translation="[-7, -7]" />
+
+        <!-- Card background (also acts as thumbnail placeholder color) -->
+        <Rectangle id="cardBg" width="270" height="170" color="#636D72FF" />
+
+        <!-- Dark thumbnail area shown while Poster image loads -->
+        <Rectangle id="thumbBg" width="270" height="120" color="#4A5459FF" />
+
+        <!-- Thumbnail image; loadDisplayMode fills the 270×120 area -->
+        <Poster id="thumb" width="270" height="120" loadDisplayMode="scaleToFill" />
+
+        <!-- Title area background (50px = exactly 2 lines of SmallestSystemFont) -->
+        <Rectangle id="titleBg" width="270" height="50" color="#636D72FF" translation="[0, 120]" />
+
+        <!-- Title text (2 lines max, 11px left/right padding) -->
+        <Label
+            id="titleLabel"
+            width="248" height="50"
+            numLines="2"
+            wrap="true"
+            horizAlign="left" vertAlign="center"
+            translation="[11, 120]"
+            color="#FFFFFFFF"
+            font="font:SmallestSystemFont" />
+
+        <!-- Corner mask — drawn on top to create rounded-corner illusion -->
+        <Poster id="cornerMask"
+            width="270" height="170"
+            uri="pkg:/images/video_corner_mask.png"
+            loadDisplayMode="noScale"
+            translation="[0, 0]" />
+
+    </children>
+    <script type="text/brightscript" uri="VideoCard.brs" />
+</component>
