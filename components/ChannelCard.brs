@@ -10,6 +10,12 @@ sub init()
     m.borderBottom = m.top.findNode("borderBottom")
     m.borderLeft   = m.top.findNode("borderLeft")
     m.borderRight  = m.top.findNode("borderRight")
+
+    ' Ensure wrap and numLines are set programmatically (XML attrs unreliable on some firmware)
+    if m.subtitleLabel <> invalid
+        m.subtitleLabel.wrap     = true
+        m.subtitleLabel.numLines = 2
+    end if
 end sub
 
 sub onDataChange()

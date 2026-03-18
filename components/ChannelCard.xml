@@ -58,18 +58,19 @@
 
         <!-- Channel name -->
         <Label id="nameLabel"
-            width="254" height="28"
+            width="254" height="26"
             horizAlign="center" vertAlign="center"
-            translation="[8, 150]"
+            translation="[8, 136]"
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont" />
 
         <!-- Channel subtitle (wrap so long names like "Monroe County Public Library" fit) -->
         <Label id="subtitleLabel"
-            width="254" height="34"
+            width="254" height="56"
             horizAlign="center" vertAlign="top"
+            numLines="3"
             wrap="true"
-            translation="[8, 182]"
+            translation="[8, 162]"
             color="#999999FF"
             font="font:SmallSystemFont" />
 

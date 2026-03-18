@@ -40,15 +40,14 @@ sub onChannelDataChange()
     end if
 
     ' Attach sidecar VTT caption track if available
+    ' SubtitleTracks is an AA: TrackName key holds the caption file URL
     subtitleUrl = channelData.subtitleUrl
     if subtitleUrl <> invalid and subtitleUrl <> ""
-        content.SubtitleTracks = [{
+        content.SubtitleTracks = {
+            TrackName:   subtitleUrl,
             Language:    "en",
-            Description: "English",
-            Name:        "English",
-            Url:         subtitleUrl,
-            TrackType:   "CAPTION"
-        }]
+            Description: "English"
+        }
     end if
 
     m.video.content = content
@@ -61,7 +60,7 @@ sub onVideoStateChange()
 
     if state = "playing"
         m.loadingLabel.visible = false
-        showOverlay(true)
+        showOverlay(false)
 
     else if state = "buffering"
         m.loadingLabel.text    = "Buffering..."
