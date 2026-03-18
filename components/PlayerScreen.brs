@@ -39,6 +39,19 @@ sub onChannelDataChange()
         content.streamformat = "mp4"
     end if
 
+    ' Attach sidecar VTT caption track if available
+    subtitleUrl = channelData.subtitleUrl
+    if subtitleUrl <> invalid and subtitleUrl <> ""
+        content.Track = [{
+            Language:    "en",
+            Description: "English",
+            Name:        "English",
+            url:         subtitleUrl,
+            TrackType:   "CAPTION"
+        }]
+        m.video.subtitleConfig = { TrackName: "English" }
+    end if
+
     m.video.content = content
     m.video.control = "play"
     m.video.setFocus(true)

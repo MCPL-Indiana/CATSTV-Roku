@@ -44,10 +44,15 @@ sub fetchVideos()
             thumb = item["thumbnail"]
             if thumb = invalid then thumb = ""
 
+            vtt = item["data-vtt"]
+            subtitleUrl = ""
+            if vtt <> invalid and vtt <> "" then subtitleUrl = baseUrl + vtt
+
             video = {
                 title:        item.title,
                 streamUrl:    baseUrl + item["data-m4v"],
-                thumbnailUrl: baseUrl + thumb
+                thumbnailUrl: baseUrl + thumb,
+                subtitleUrl:  subtitleUrl
             }
             videos.push(video)
         end if

@@ -58,8 +58,9 @@ sub onVideoSelected(event as Object)
     if videoData = invalid then return
 
     channelData = {
-        name:      videoData.title,
-        streamUrl: videoData.streamUrl
+        name:        videoData.title,
+        streamUrl:   videoData.streamUrl,
+        subtitleUrl: videoData.subtitleUrl
     }
 
     m.playerScreen.channelData = channelData
