@@ -64,11 +64,12 @@
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont" />
 
-        <!-- Channel subtitle -->
+        <!-- Channel subtitle (wrap so long names like "Monroe County Public Library" fit) -->
         <Label id="subtitleLabel"
             width="254" height="34"
-            horizAlign="center" vertAlign="center"
-            translation="[8, 180]"
+            horizAlign="center" vertAlign="top"
+            wrap="true"
+            translation="[8, 182]"
             color="#999999FF"
             font="font:SmallSystemFont" />
 
@@ -77,6 +78,13 @@
         <Rectangle id="borderBottom" width="270" height="2"   color="#00000000" translation="[0, 218]" />
         <Rectangle id="borderLeft"   width="2"   height="220" color="#00000000" translation="[0, 0]" />
         <Rectangle id="borderRight"  width="2"   height="220" color="#00000000" translation="[268, 0]" />
+
+        <!-- Corner mask — drawn on top to create rounded-corner illusion -->
+        <Poster id="cornerMask"
+            width="270" height="220"
+            uri="pkg:/images/card_corner_mask.png"
+            loadDisplayMode="noScale"
+            translation="[0, 0]" />
 
     </children>
     <script type="text/brightscript" uri="ChannelCard.brs" />

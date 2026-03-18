@@ -18,8 +18,8 @@
 
     <children>
 
-        <!-- Coral focus border (behind everything; 4px ring via oversized rect) -->
-        <Rectangle id="focusBorder" width="248" height="168" color="#00000000" translation="[-4, -4]" />
+        <!-- Coral focus border (8px ring via oversized rect) -->
+        <Rectangle id="focusBorder" width="256" height="176" color="#00000000" translation="[-8, -8]" />
 
         <!-- Card background (also acts as thumbnail placeholder color) -->
         <Rectangle id="cardBg" width="240" height="160" color="#636D72FF" />
@@ -42,6 +42,13 @@
             translation="[11, 110]"
             color="#FFFFFFFF"
             font="font:SmallSystemFont" />
+
+        <!-- Corner mask — drawn on top to create rounded-corner illusion -->
+        <Poster id="cornerMask"
+            width="240" height="160"
+            uri="pkg:/images/video_corner_mask.png"
+            loadDisplayMode="noScale"
+            translation="[0, 0]" />
 
     </children>
     <script type="text/brightscript" uri="VideoCard.brs" />

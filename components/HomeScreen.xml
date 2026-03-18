@@ -82,20 +82,21 @@
                 color="#636D72FF"
                 translation="[60, 530]" />
 
-            <!-- ── "MOST RECENT VIDEOS" section heading (coral) ── -->
+            <!-- ── "MOST RECENT VIDEOS" section heading (coral, centered) ── -->
             <Label
                 id="recentLabel"
-                width="700" height="34"
+                width="1280" height="34"
                 text="MOST RECENT VIDEOS"
-                horizAlign="left" vertAlign="center"
-                translation="[60, 538]"
+                horizAlign="center" vertAlign="center"
+                translation="[0, 538]"
                 color="#FF5F62FF"
                 font="font:SmallBoldSystemFont" />
 
-            <!-- ── Three video rows ── -->
-            <VideoRow id="govRow"       translation="[0, 580]" />
-            <VideoRow id="communityRow" translation="[0, 784]" />
-            <VideoRow id="catsweekRow"  translation="[0, 988]" />
+            <!-- ── Four video rows (City, County, Community, CATSWeek) ── -->
+            <VideoRow id="cityRow"      translation="[0, 580]" />
+            <VideoRow id="countyRow"    translation="[0, 784]" />
+            <VideoRow id="communityRow" translation="[0, 988]" />
+            <VideoRow id="catsweekRow"  translation="[0, 1192]" />
 
         </Group>
         <!-- ──────────────────────────────────────────────────────────────── -->

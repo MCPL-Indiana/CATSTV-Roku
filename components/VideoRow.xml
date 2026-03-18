@@ -24,20 +24,18 @@
 
     <children>
 
-        <!-- Section icon badge (coral square, 34×34) -->
-        <Rectangle id="iconBg" width="34" height="34" color="#FF5F62FF" translation="[60, 0]" />
-        <!-- Icon image overlaid on coral badge (white icon, 24×24 centered in 34×34) -->
+        <!-- Section icon (coral-coloured, no background square — mirrors Apple TV) -->
         <Poster id="iconPoster"
-            width="24" height="24"
+            width="28" height="28"
             loadDisplayMode="scaleToFit"
-            translation="[65, 5]" />
+            translation="[60, 3]" />
 
-        <!-- Section title (white bold, e.g. "GOVERNMENT MEETINGS") -->
+        <!-- Section title (white bold, e.g. "CITY MEETINGS") -->
         <Label
             id="sectionTitleLabel"
             width="600" height="34"
             horizAlign="left" vertAlign="center"
-            translation="[104, 0]"
+            translation="[96, 0]"
             color="#FFFFFFFF"
             font="font:MediumBoldSystemFont" />
 
