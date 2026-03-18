@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
-    ChannelCard.xml - Focusable channel card (mirrors tvOS ChannelCardView)
+    ChannelCard.xml - Full-image channel card
 
-    Coordinate space: HD 1280x720
-
-    Card anatomy (270 x 220):
-      [0-145]   Thumbnail area with dark bg + channel icon image
-      [117-138]  LIVE badge (coral pill, centered)
-      [150-178]  Channel name (bold, turns coral when focused)
-      [180-214]  Subtitle (small gray text)
-
-    Focus state: darker bg + coral name text + coral border outline.
-    Borders are rendered last so they appear on top of all fill content.
+    Card image (270x220 PNG) contains the background, icon, LIVE badge,
+    channel name, and subtitle. Focus state adds a coral border outline.
 -->
 <component name="ChannelCard" extends="Group">
     <interface>
@@ -23,69 +15,17 @@
 
     <children>
 
-        <!-- Outer card background -->
-        <Rectangle id="cardBg"
+        <!-- Full-card image (270x220 PNG with all content baked in) -->
+        <Poster id="cardPoster"
             width="270" height="220"
-            color="#636D72FF"
-            blendingEnabled="true" />
-
-        <!-- Thumbnail area background -->
-        <Rectangle id="thumbBg"
-            width="270" height="145"
-            color="#4A5459FF"
-            translation="[0, 0]" />
-
-        <!-- Channel icon image (centered in thumbnail) -->
-        <Poster id="iconPoster"
-            width="80" height="80"
-            loadDisplayMode="scaleToFit"
-            translation="[95, 10]" />
-
-        <!-- LIVE badge background (coral) -->
-        <Rectangle id="liveBadgeBg"
-            width="76" height="21"
-            color="#FF5F62FF"
-            translation="[97, 117]" />
-
-        <!-- LIVE badge text -->
-        <Label id="liveLabel"
-            width="76" height="21"
-            text="• LIVE"
-            horizAlign="center" vertAlign="center"
-            translation="[97, 117]"
-            color="#FFFFFFFF"
-            font="font:SmallBoldSystemFont" />
-
-        <!-- Channel name -->
-        <Label id="nameLabel"
-            width="254" height="26"
-            horizAlign="center" vertAlign="center"
-            translation="[8, 136]"
-            color="#FFFFFFFF"
-            font="font:MediumBoldSystemFont" />
-
-        <!-- Channel subtitle (wrap so long names like "Monroe County Public Library" fit) -->
-        <Label id="subtitleLabel"
-            width="254" height="56"
-            horizAlign="center" vertAlign="top"
-            numLines="3"
-            wrap="true"
-            translation="[8, 162]"
-            color="#999999FF"
-            font="font:SmallSystemFont" />
-
-        <!-- Coral border — rendered last so it draws on top of all fill content -->
-        <Rectangle id="borderTop"    width="270" height="2"   color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderBottom" width="270" height="2"   color="#00000000" translation="[0, 218]" />
-        <Rectangle id="borderLeft"   width="2"   height="220" color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderRight"  width="2"   height="220" color="#00000000" translation="[268, 0]" />
-
-        <!-- Corner mask — drawn on top to create rounded-corner illusion -->
-        <Poster id="cornerMask"
-            width="270" height="220"
-            uri="pkg:/images/card_corner_mask.png"
             loadDisplayMode="noScale"
             translation="[0, 0]" />
+
+        <!-- Coral focus border — invisible until focused -->
+        <Rectangle id="borderTop"    width="270" height="3"   color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderBottom" width="270" height="3"   color="#00000000" translation="[0, 217]" />
+        <Rectangle id="borderLeft"   width="3"   height="220" color="#00000000" translation="[0, 0]" />
+        <Rectangle id="borderRight"  width="3"   height="220" color="#00000000" translation="[267, 0]" />
 
     </children>
     <script type="text/brightscript" uri="ChannelCard.brs" />

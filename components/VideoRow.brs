@@ -13,9 +13,9 @@ sub init()
     m.cards        = []
     m.scrollOffset = 0
 
-    ' Card step: 240px wide + 24px gap = 264px
-    m.cardStep     = 264
-    m.cardWidth    = 240
+    ' Card step: 270px wide + 24px gap = 294px
+    m.cardStep     = 294
+    m.cardWidth    = 270
     m.visibleWidth = 1160
 end sub
 

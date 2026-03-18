@@ -17,28 +17,28 @@ sub init()
             id: "city",
             name: "CITY CHANNEL",
             subtitle: "Bloomington City Government",
-            iconImage: "pkg:/images/icon_city.png",
+            iconImage: "pkg:/images/channel_card_city.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/f8f183aa686dea8fded26ffa5475d3f5/source/index.m3u8"
         },
         {
             id: "county",
             name: "COUNTY CHANNEL",
             subtitle: "Monroe County Government",
-            iconImage: "pkg:/images/icon_county.png",
+            iconImage: "pkg:/images/channel_card_county.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/717441a0f28e627c7d64f28827fd262f/source/index.m3u8"
         },
         {
             id: "library",
             name: "LIBRARY CHANNEL",
             subtitle: "Monroe County Public Library",
-            iconImage: "pkg:/images/icon_library.png",
+            iconImage: "pkg:/images/channel_card_library.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/cfa6d8a759fc6aedf7e8a04c4ad003e6/source/index.m3u8"
         },
         {
             id: "special2",
             name: "SPECIAL 2",
             subtitle: "Special Programming",
-            iconImage: "pkg:/images/icon_special.png",
+            iconImage: "pkg:/images/channel_card_special2.png",
             streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/86d196fc-7e71-42df-c6f5-d1eafa67f0c1/index.m3u8"
         }
     ]
@@ -211,13 +211,13 @@ sub setFocusSection(section as String)
         scrollTo(-528.0)   ' "MOST RECENT VIDEOS" at y=10; City at y=52
         m.cityRow.focusedIndex = m.cityFocusIndex
     else if section = "county"
-        scrollTo(-714.0)   ' County at y=70
+        scrollTo(-810.0)   ' County at y=70
         m.countyRow.focusedIndex = m.countyFocusIndex
     else if section = "community"
-        scrollTo(-918.0)   ' Community at y=70
+        scrollTo(-1110.0)  ' Community at y=70
         m.communityRow.focusedIndex = m.communityFocusIndex
     else if section = "catsweek"
-        scrollTo(-1122.0)  ' CATSWeek at y=70
+        scrollTo(-1410.0)  ' CATSWeek at y=70
         m.catsweekRow.focusedIndex = m.catsweekFocusIndex
     end if
 end sub

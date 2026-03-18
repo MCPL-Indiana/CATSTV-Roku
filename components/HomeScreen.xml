@@ -94,9 +94,9 @@
 
             <!-- ── Four video rows (City, County, Community, CATSWeek) ── -->
             <VideoRow id="cityRow"      translation="[0, 580]" />
-            <VideoRow id="countyRow"    translation="[0, 784]" />
-            <VideoRow id="communityRow" translation="[0, 988]" />
-            <VideoRow id="catsweekRow"  translation="[0, 1192]" />
+            <VideoRow id="countyRow"    translation="[0, 880]" />
+            <VideoRow id="communityRow" translation="[0, 1180]" />
+            <VideoRow id="catsweekRow"  translation="[0, 1480]" />
 
         </Group>
         <!-- ──────────────────────────────────────────────────────────────── -->

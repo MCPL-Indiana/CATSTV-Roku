@@ -61,9 +61,9 @@
             font="font:SmallSystemFont"
             visible="false" />
 
-        <!-- Horizontal clip area — Group with clippingRect replaces ScrollRect -->
+        <!-- Horizontal clip area — extended 14px on each side to show focus border -->
         <Group id="cardsClip"
-            clippingRect="[0, 0, 1160, 160]"
+            clippingRect="[-7, -7, 1174, 184]"
             translation="[60, 44]">
             <Group id="cardsGroup" />
         </Group>
