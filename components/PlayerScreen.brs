@@ -42,14 +42,13 @@ sub onChannelDataChange()
     ' Attach sidecar VTT caption track if available
     subtitleUrl = channelData.subtitleUrl
     if subtitleUrl <> invalid and subtitleUrl <> ""
-        content.Track = [{
+        content.SubtitleTracks = [{
             Language:    "en",
             Description: "English",
             Name:        "English",
-            url:         subtitleUrl,
+            Url:         subtitleUrl,
             TrackType:   "CAPTION"
         }]
-        m.video.subtitleConfig = { TrackName: "English" }
     end if
 
     m.video.content = content
