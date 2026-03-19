@@ -21,11 +21,13 @@
             loadDisplayMode="noScale"
             translation="[0, 0]" />
 
-        <!-- Coral focus border — invisible until focused -->
-        <Rectangle id="borderTop"    width="270" height="3"   color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderBottom" width="270" height="3"   color="#00000000" translation="[0, 217]" />
-        <Rectangle id="borderLeft"   width="3"   height="220" color="#00000000" translation="[0, 0]" />
-        <Rectangle id="borderRight"  width="3"   height="220" color="#00000000" translation="[267, 0]" />
+        <!-- Coral focus border with rounded corners — hidden until focused -->
+        <Poster id="focusBorder"
+            width="282" height="232"
+            uri="pkg:/images/focus_border_channel.png"
+            loadDisplayMode="noScale"
+            translation="[-6, -6]"
+            visible="false" />
 
     </children>
     <script type="text/brightscript" uri="ChannelCard.brs" />

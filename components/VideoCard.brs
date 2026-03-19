@@ -19,13 +19,12 @@ sub onThumbChange()
 end sub
 
 sub onFocusChange()
+    m.focusBorder.visible = m.top.isFocused
     if m.top.isFocused
-        m.focusBorder.color = "#FF5F62FF"
-        m.cardBg.color      = "#4A5459FF"
-        m.titleBg.color     = "#4A5459FF"
+        m.cardBg.color  = "#4A5459FF"
+        m.titleBg.color = "#4A5459FF"
     else
-        m.focusBorder.color = "#00000000"
-        m.cardBg.color      = "#636D72FF"
-        m.titleBg.color     = "#636D72FF"
+        m.cardBg.color  = "#636D72FF"
+        m.titleBg.color = "#636D72FF"
     end if
 end sub

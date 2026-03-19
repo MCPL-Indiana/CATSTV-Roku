@@ -1,11 +1,8 @@
 ' ChannelCard.brs - Full-image channel card
 
 sub init()
-    m.cardPoster   = m.top.findNode("cardPoster")
-    m.borderTop    = m.top.findNode("borderTop")
-    m.borderBottom = m.top.findNode("borderBottom")
-    m.borderLeft   = m.top.findNode("borderLeft")
-    m.borderRight  = m.top.findNode("borderRight")
+    m.cardPoster  = m.top.findNode("cardPoster")
+    m.focusBorder = m.top.findNode("focusBorder")
 end sub
 
 sub onDataChange()
@@ -15,15 +12,5 @@ sub onDataChange()
 end sub
 
 sub onFocusChange()
-    if m.top.isFocused
-        m.borderTop.color    = "#FF5F62FF"
-        m.borderBottom.color = "#FF5F62FF"
-        m.borderLeft.color   = "#FF5F62FF"
-        m.borderRight.color  = "#FF5F62FF"
-    else
-        m.borderTop.color    = "#00000000"
-        m.borderBottom.color = "#00000000"
-        m.borderLeft.color   = "#00000000"
-        m.borderRight.color  = "#00000000"
-    end if
+    m.focusBorder.visible = m.top.isFocused
 end sub

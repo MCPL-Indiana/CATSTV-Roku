@@ -63,7 +63,7 @@ sub init()
     ' ── Banner image ─────────────────────────────────────────────────────────
     bannerImage = m.top.findNode("bannerImage")
     if bannerImage <> invalid
-        bannerImage.uri = "pkg:/images/channels_banner.jpg"
+        bannerImage.uri = "pkg:/images/channels_banner_transparent.png"
     end if
 
     ' ── Scrollable content group ─────────────────────────────────────────────
