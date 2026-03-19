@@ -18,8 +18,13 @@
 
     <children>
 
-        <!-- Coral focus border (7px ring via oversized rect) -->
-        <Rectangle id="focusBorder" width="284" height="184" color="#00000000" translation="[-7, -7]" />
+        <!-- Coral focus border with rounded corners -->
+        <Poster id="focusBorder"
+            width="284" height="184"
+            uri="pkg:/images/focus_border_video.png"
+            loadDisplayMode="noScale"
+            translation="[-7, -7]"
+            visible="false" />
 
         <!-- Card background (also acts as thumbnail placeholder color) -->
         <Rectangle id="cardBg" width="270" height="170" color="#636D72FF" />
