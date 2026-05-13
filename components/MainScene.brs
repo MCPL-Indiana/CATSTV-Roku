@@ -39,6 +39,32 @@ sub init()
     m.playerScreen.observeField("playerClosed",  "onPlayerClosed")
 
     m.homeScreen.setFocus(true)
+    m.top.signalBeacon("AppLaunchComplete")
+end sub
+
+sub onLaunchArgs(event as Object)
+    args = event.getData()
+    if args = invalid then return
+
+    contentId = args.contentId
+    mediaType = args.mediaType
+    if contentId = invalid or contentId = "" then return
+
+    ' Direct to Play (req 5.2): map contentId to live stream and launch player
+    streamUrls = {
+        city:     "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/f8f183aa686dea8fded26ffa5475d3f5/source/index.m3u8",
+        county:   "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/717441a0f28e627c7d64f28827fd262f/source/index.m3u8",
+        library:  "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/cfa6d8a759fc6aedf7e8a04c4ad003e6/source/index.m3u8",
+        special2: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/86d196fc-7e71-42df-c6f5-d1eafa67f0c1/index.m3u8"
+    }
+    streamUrl = streamUrls[contentId]
+    if streamUrl = invalid then return
+
+    channelData = { name: contentId, streamUrl: streamUrl }
+    m.playerScreen.channelData = channelData
+    m.playerScreen.visible = true
+    m.homeScreen.visible = false
+    m.playerScreen.setFocus(true)
 end sub
 
 ' Live stream selected — pass channelData directly to PlayerScreen

@@ -3,6 +3,9 @@
     MainScene.xml - Root scene, manages navigation between HomeScreen and PlayerScreen
 -->
 <component name="MainScene" extends="Scene" handlesBack="true">
+    <interface>
+        <field id="launchArgs" type="assocarray" onChange="onLaunchArgs" />
+    </interface>
     <children>
         <HomeScreen id="homeScreen" visible="true" />
         <PlayerScreen id="playerScreen" visible="false" />

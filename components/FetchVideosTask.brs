@@ -16,7 +16,6 @@ sub fetchVideos()
     http = CreateObject("roUrlTransfer")
     http.SetUrl(url)
     http.AddHeader("User-Agent", "Roku/CatsTV")
-    http.EnableFreshConnection(true)
 
     response = http.GetToString()
 
