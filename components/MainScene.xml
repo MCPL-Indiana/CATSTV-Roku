@@ -8,6 +8,7 @@
     </interface>
     <children>
         <HomeScreen id="homeScreen" visible="true" />
+        <SearchScreen id="searchScreen" visible="false" />
         <PlayerScreen id="playerScreen" visible="false" />
     </children>
     <script type="text/brightscript" uri="MainScene.brs" />
