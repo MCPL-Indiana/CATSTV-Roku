@@ -6,24 +6,27 @@
     Coordinate space: HD 1280×720
 
     Layout — contentGroup scrolls vertically:
-      [y=0]    channels4_banner.jpg (1280×212)
-      [y=222]  "WATCH CATS " + "LIVE" heading
-      [y=266]  Subtitle: "Select a channel to start watching"
-      [y=300]  4 channel cards (270×220), x=60, 357, 654, 951
-      [y=530]  separator line (1160×2)
-      [y=538]  "MOST RECENT VIDEOS" heading (coral)
-      [y=580]  Government Meetings VideoRow
-      [y=784]  Community Videos VideoRow
-      [y=988]  CATSWeek VideoRow
+      [y=0]    channels_banner_transparent.png (1280×212, fills its box exactly)
+      [y=222]  "Search CATS Archive" pill (210×36), right edge aligned to card3
+      [y=272]  "WATCH CATS " + "LIVE" heading
+      [y=316]  Subtitle: "Select a channel to start watching"
+      [y=350]  4 channel cards (270×220), x=60, 357, 654, 951
+      [y=580]  separator line (1160×2)
+      [y=588]  "MOST RECENT VIDEOS" heading (coral)
+      [y=630]  City Meetings VideoRow
+      [y=930]  County Meetings VideoRow
+      [y=1230] Community Videos VideoRow
+      [y=1530] CATSWeek VideoRow
 
-    Vertical scroll positions (contentGroup.translation.y):
-      0    → channels section visible; banner at top
-      -528 → "MOST RECENT VIDEOS" lands at y=10; video rows fill y=52–692
+    Vertical scroll positions (contentGroup.translation.y) — see HomeScreen.brs:
+      0    → banner, search pill and live channels visible
+      -578 → "MOST RECENT VIDEOS" near the top; City Meetings row below it
 -->
 <component name="HomeScreen" extends="Group" handlesBack="false">
     <interface>
         <field id="channelSelected" type="assocarray" alwaysNotify="true" />
         <field id="videoSelected"   type="assocarray" alwaysNotify="true" />
+        <field id="searchOpened"    type="boolean"    alwaysNotify="true" />
     </interface>
 
     <children>
@@ -32,7 +35,7 @@
         <Rectangle id="bg" width="1280" height="720" color="#282C2FFF" />
 
         <!-- ── Scrollable content group ──────────────────────────────────────
-             BrightScript animates translation.y between 0 and -528.         -->
+             BrightScript animates translation.y between 0 and -1460.        -->
         <Group id="contentGroup">
 
             <!-- ── Banner image (mirrors tvOS ChannelsBanner at top of scroll) ── -->
@@ -41,13 +44,42 @@
                 loadDisplayMode="scaleToFit"
                 translation="[0, 0]" />
 
+            <!-- ── Search entry point (mirrors the tvOS "Search CATS Archives" pill) ──
+                 Sits below the banner and above the WATCH CATS LIVE heading, its
+                 right edge aligned to the last channel card (951+270=1221).
+                 Rounded corners come from the pill PNGs — SceneGraph Rectangle
+                 has no corner radius. The icon + label are centred inside the
+                 250px pill by BrightScript so the text can't overflow it. -->
+            <Group id="searchButtonGroup" translation="[971, 222]">
+                <Poster id="searchButtonBg"
+                    width="250" height="36"
+                    uri="pkg:/images/search_button_normal.png"
+                    loadDisplayMode="noScale"
+                    translation="[0, 0]" />
+                <!-- White glyph; blendColor tints it coral on focus -->
+                <Poster id="searchButtonIcon"
+                    width="20" height="20"
+                    uri="pkg:/images/icon_search.png"
+                    loadDisplayMode="noScale"
+                    translation="[18, 8]" />
+                <!-- No width= so the Label auto-sizes to its text and
+                     boundingRect() reports the real text width for centring. -->
+                <Label id="searchButtonLabel"
+                    height="36"
+                    text="Search CATS Archive"
+                    horizAlign="left" vertAlign="center"
+                    translation="[46, 0]"
+                    color="#FFFFFFFF"
+                    font="font:SmallestBoldSystemFont" />
+            </Group>
+
             <!-- "WATCH CATS" (white) + "LIVE" (coral) — centered by BrightScript -->
             <Label
                 id="watchCatsLabel"
                 height="40"
                 text="WATCH CATS "
                 horizAlign="left" vertAlign="center"
-                translation="[0, 222]"
+                translation="[0, 272]"
                 color="#FFFFFFFF"
                 font="font:LargeSystemFont" />
             <Label
@@ -55,7 +87,7 @@
                 height="40"
                 text="LIVE"
                 horizAlign="left" vertAlign="center"
-                translation="[0, 222]"
+                translation="[0, 272]"
                 color="#FF5F62FF"
                 font="font:LargeSystemFont" />
 
@@ -65,22 +97,22 @@
                 width="800" height="26"
                 text="Select a channel to start watching"
                 horizAlign="center" vertAlign="center"
-                translation="[240, 266]"
+                translation="[240, 316]"
                 color="#999999FF"
                 font="font:SmallSystemFont" />
 
-            <!-- ── Channel cards: x = 60, 357, 654, 951; y = 300 ──
+            <!-- ── Channel cards: x = 60, 357, 654, 951; y = 350 ──
                  4 × 270px + 3 × 27px gap = 1161px; last edge = 951+270 = 1221 < 1226 ✓ -->
-            <ChannelCard id="card0" translation="[60,  300]" />
-            <ChannelCard id="card1" translation="[357, 300]" />
-            <ChannelCard id="card2" translation="[654, 300]" />
-            <ChannelCard id="card3" translation="[951, 300]" />
+            <ChannelCard id="card0" translation="[60,  350]" />
+            <ChannelCard id="card1" translation="[357, 350]" />
+            <ChannelCard id="card2" translation="[654, 350]" />
+            <ChannelCard id="card3" translation="[951, 350]" />
 
             <!-- ── Divider between live channels and recent videos ── -->
             <Rectangle id="separator"
                 width="1160" height="2"
                 color="#636D72FF"
-                translation="[60, 530]" />
+                translation="[60, 580]" />
 
             <!-- ── "MOST RECENT VIDEOS" section heading (coral, centered) ── -->
             <Label
@@ -88,15 +120,15 @@
                 width="1280" height="34"
                 text="MOST RECENT VIDEOS"
                 horizAlign="center" vertAlign="center"
-                translation="[0, 538]"
+                translation="[0, 588]"
                 color="#FF5F62FF"
                 font="font:SmallBoldSystemFont" />
 
             <!-- ── Four video rows (City, County, Community, CATSWeek) ── -->
-            <VideoRow id="cityRow"      translation="[0, 580]" />
-            <VideoRow id="countyRow"    translation="[0, 880]" />
-            <VideoRow id="communityRow" translation="[0, 1180]" />
-            <VideoRow id="catsweekRow"  translation="[0, 1480]" />
+            <VideoRow id="cityRow"      translation="[0, 630]" />
+            <VideoRow id="countyRow"    translation="[0, 930]" />
+            <VideoRow id="communityRow" translation="[0, 1230]" />
+            <VideoRow id="catsweekRow"  translation="[0, 1530]" />
 
         </Group>
         <!-- ──────────────────────────────────────────────────────────────── -->

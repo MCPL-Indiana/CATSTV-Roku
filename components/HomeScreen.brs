@@ -1,13 +1,13 @@
 ' HomeScreen.brs - Channel selection + Recent Videos browsing
 '
-' Focus sections: "channels" | "city" | "county" | "community" | "catsweek"
+' Focus sections: "search" | "channels" | "city" | "county" | "community" | "catsweek"
 '
 ' Vertical scroll (contentGroup.translation.y):
-'   0     → live channels visible; banner at top
-'   -528  → "MOST RECENT VIDEOS" at y=10; City Meetings at y=52
-'   -714  → County Meetings at y=70
-'   -918  → Community Videos at y=70
-'   -1122 → CATSWeek at y=70
+'   0     → banner, search pill and live channels visible
+'   -578  → "MOST RECENT VIDEOS" at y=10; City Meetings at y=52
+'   -860  → County Meetings at y=70
+'   -1160 → Community Videos at y=70
+'   -1460 → CATSWeek at y=70
 '
 ' All key events are handled here — child components are purely visual.
 
@@ -66,6 +66,11 @@ sub init()
         bannerImage.uri = "pkg:/images/channels_banner_transparent.png"
     end if
 
+    ' ── Search entry point ───────────────────────────────────────────────────
+    m.searchButtonBg    = m.top.findNode("searchButtonBg")
+    m.searchButtonIcon  = m.top.findNode("searchButtonIcon")
+    m.searchButtonLabel = m.top.findNode("searchButtonLabel")
+
     ' ── Scrollable content group ─────────────────────────────────────────────
     m.contentGroup = m.top.findNode("contentGroup")
 
@@ -90,6 +95,8 @@ sub init()
 
     ' ── Initialize UI ────────────────────────────────────────────────────────
     updateChannelFocus()
+    setSearchButtonFocused(false)
+    centerSearchButton()
     centerHeading()
 
     ' ── Kick off parallel JSON fetches ───────────────────────────────────────
@@ -104,8 +111,8 @@ sub centerHeading()
     liveWidth  = liveLabel.boundingRect().width
 
     startX = int((1280 - watchWidth - liveWidth) / 2)
-    watchLabel.translation = [startX, 222]
-    liveLabel.translation  = [startX + watchWidth, 222]
+    watchLabel.translation = [startX, 272]
+    liveLabel.translation  = [startX + watchWidth, 272]
 end sub
 
 sub startVideoFetches()
@@ -188,6 +195,38 @@ sub updateChannelFocus()
     end for
 end sub
 
+' Swap the whole pill bitmap rather than toggling a border node, so the coral
+' outline follows the rounded corners. blendColor tints the white glyph to match
+' the label.
+sub setSearchButtonFocused(focused as Boolean)
+    if focused
+        m.searchButtonBg.uri         = "pkg:/images/search_button_focused.png"
+        m.searchButtonLabel.color    = "#FF5F62FF"
+        m.searchButtonIcon.blendColor = "#FF5F62FF"
+    else
+        m.searchButtonBg.uri         = "pkg:/images/search_button_normal.png"
+        m.searchButtonLabel.color    = "#FFFFFFFF"
+        m.searchButtonIcon.blendColor = "#FFFFFFFF"
+    end if
+end sub
+
+' Centre the magnifying glass + label as a unit inside the pill. Measured at
+' runtime because the label's rendered width depends on the system font — the
+' pill is sized so this lands ~24px of padding on each side.
+sub centerSearchButton()
+    iconWidth = 20
+    gap       = 8
+    pillWidth = 250
+
+    labelWidth = m.searchButtonLabel.boundingRect().width
+    contentWidth = iconWidth + gap + labelWidth
+    startX = int((pillWidth - contentWidth) / 2)
+    if startX < 12 then startX = 12
+
+    m.searchButtonIcon.translation  = [startX, 8]
+    m.searchButtonLabel.translation = [startX + iconWidth + gap, 0]
+end sub
+
 ' ── Section switching ─────────────────────────────────────────────────────────
 ' Each video section scrolls to place itself near the top of the screen.
 
@@ -203,21 +242,25 @@ sub setFocusSection(section as String)
     m.countyRow.focusedIndex    = -1
     m.communityRow.focusedIndex = -1
     m.catsweekRow.focusedIndex  = -1
+    setSearchButtonFocused(false)
 
     if section = "channels"
         scrollTo(0.0)
         updateChannelFocus()
+    else if section = "search"
+        scrollTo(0.0)
+        setSearchButtonFocused(true)
     else if section = "city"
-        scrollTo(-528.0)   ' "MOST RECENT VIDEOS" at y=10; City at y=52
+        scrollTo(-578.0)   ' "MOST RECENT VIDEOS" at y=10; City at y=52
         m.cityRow.focusedIndex = m.cityFocusIndex
     else if section = "county"
-        scrollTo(-810.0)   ' County at y=70
+        scrollTo(-860.0)   ' County at y=70
         m.countyRow.focusedIndex = m.countyFocusIndex
     else if section = "community"
-        scrollTo(-1110.0)  ' Community at y=70
+        scrollTo(-1160.0)  ' Community at y=70
         m.communityRow.focusedIndex = m.communityFocusIndex
     else if section = "catsweek"
-        scrollTo(-1410.0)  ' CATSWeek at y=70
+        scrollTo(-1460.0)  ' CATSWeek at y=70
         m.catsweekRow.focusedIndex = m.catsweekFocusIndex
     end if
 end sub
@@ -240,11 +283,23 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
                 updateChannelFocus()
             end if
             return true
+        else if key = "up"
+            setFocusSection("search")
+            return true
         else if key = "down"
             setFocusSection("city")
             return true
         else if key = "OK" or key = "play"
             m.top.channelSelected = m.channels[m.channelFocusIndex]
+            return true
+        end if
+
+    else if m.focusSection = "search"
+        if key = "down"
+            setFocusSection("channels")
+            return true
+        else if key = "OK" or key = "play"
+            m.top.searchOpened = true
             return true
         end if
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    SearchScreen.xml - Full-archive video search (mirrors tvOS VideoSearchView)
+
+    Layout (1280x720) — keyboard on top, results underneath, like the Apple TV app:
+      [x=60,  y=10]   "SEARCH THE ARCHIVE" heading (coral)
+      [       y=48]   Keyboard — Roku's built-in on-screen keyboard, centred
+                      horizontally; typing filters the archive by title
+      [       y=372]  Separator line
+      [x=60,  y=382]  Status label ("N results")
+      [x=60,  y=414]  Results grid — 4 columns of VideoCard
+
+    Everything below the keyboard is positioned by SearchScreen.brs, measured off
+    the Keyboard node's real rendered height, so the layout can't collide with the
+    keyboard the way a hardcoded y would.
+
+    The keyboard lives INSIDE contentGroup along with the results, so scrolling
+    down through the grid slides the keyboard up off the top of the screen — the
+    same contentGroup idiom HomeScreen uses. This is deliberate: an earlier
+    version kept the keyboard fixed and clipped the grid beneath it, but the
+    cards rendered straight over the keyboard instead of being clipped. Scrolling
+    them together means the screen edge does the clipping and the two can never
+    overlap.
+
+    Focus moves keyboard <-> grid: Down from the keyboard (once results exist)
+    hands focus to the grid; Up from the grid's top row returns it (and scrolls
+    the keyboard back into view). Back always closes back to HomeScreen.
+
+    The archive is fetched once via FetchAllVideosTask (all.json, falling back to
+    combining the four per-section feeds) and cached for 15 minutes.
+-->
+<component name="SearchScreen" extends="Group" handlesBack="false">
+    <interface>
+        <field id="videoSelected" type="assocarray" alwaysNotify="true" />
+        <field id="closed"        type="boolean"    alwaysNotify="true" />
+    </interface>
+
+    <children>
+
+        <!-- Fixed full-screen background — outside contentGroup so it never scrolls -->
+        <Rectangle id="bg" width="1280" height="720" color="#282C2FFF" />
+
+        <!-- ── Scrollable content: heading + keyboard + results ──────────────
+             BrightScript animates translation.y from 0 (keyboard visible) to
+             negative values that carry the keyboard off the top.            -->
+        <Group id="contentGroup">
+
+            <Label
+                id="headingLabel"
+                width="600" height="30"
+                text="SEARCH THE ARCHIVE"
+                horizAlign="left" vertAlign="center"
+                translation="[60, 10]"
+                color="#FF5F62FF"
+                font="font:SmallBoldSystemFont" />
+
+            <!-- Centred horizontally by SearchScreen.brs -->
+            <Keyboard id="keyboard" translation="[0, 48]" />
+
+            <!-- Divider between the keyboard and the results (mirrors the tvOS rule) -->
+            <Rectangle id="separator"
+                width="1160" height="2"
+                color="#636D72FF"
+                translation="[60, 0]"
+                visible="false" />
+
+            <Label
+                id="statusLabel"
+                width="700" height="26"
+                text=""
+                horizAlign="left" vertAlign="center"
+                translation="[60, 0]"
+                color="#999999FF"
+                font="font:SmallSystemFont" />
+
+            <!-- Results grid — 4 columns; y set by SearchScreen.brs -->
+            <Group id="resultsGroup" translation="[60, 0]" />
+
+        </Group>
+
+        <!-- ── Scroll animation (animates contentGroup.translation) ── -->
+        <Animation id="scrollAnim" duration="0.2" easeFunction="outQuad" repeat="false">
+            <Vector2DFieldInterpolator
+                id="scrollInterp"
+                fieldToInterp="contentGroup.translation"
+                key="[0.0, 1.0]" />
+        </Animation>
+
+    </children>
+    <script type="text/brightscript" uri="SearchScreen.brs" />
+</component>

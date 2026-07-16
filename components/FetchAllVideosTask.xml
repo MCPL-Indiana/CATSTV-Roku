@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    FetchAllVideosTask.xml - Downloads the cumulative video archive index used
+    by SearchScreen (mirrors tvOS VideoSearchService).
+-->
+<component name="FetchAllVideosTask" extends="Task">
+    <interface>
+        <field id="result" type="assocarray" alwaysNotify="true" />
+    </interface>
+    <script type="text/brightscript" uri="FetchAllVideosTask.brs" />
+</component>
