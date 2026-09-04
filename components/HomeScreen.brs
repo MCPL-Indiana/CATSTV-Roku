@@ -18,7 +18,7 @@ sub init()
             name: "CITY CHANNEL",
             subtitle: "Bloomington City Government",
             iconImage: "pkg:/images/channel_card_city.png",
-            streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/f8f183aa686dea8fded26ffa5475d3f5/source/index.m3u8"
+            streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/cfa6d8a759fc6aedf7e8a04c4ad003e6/source/index.m3u8"
         },
         {
             id: "county",
@@ -32,7 +32,7 @@ sub init()
             name: "LIBRARY CHANNEL",
             subtitle: "Monroe County Public Library",
             iconImage: "pkg:/images/channel_card_library.png",
-            streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/cfa6d8a759fc6aedf7e8a04c4ad003e6/source/index.m3u8"
+            streamUrl: "https://cdn-us-east-prod-ingest-infra-dacast-com.akamaized.net/f8f183aa686dea8fded26ffa5475d3f5/source/index.m3u8"
         },
         {
             id: "special2",
